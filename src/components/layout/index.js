@@ -10,14 +10,23 @@ import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
 import Header from '../header';
+import Footer from '../footer';
 
 const Layout = ({ children }) => {
-  const data = useStaticQuery(graphql`
+  const {
+    site: {
+      siteMetadata: { title, author, social },
+    },
+  } = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
           title
           author
+          social {
+            name
+            url
+          }
         }
       }
     }
@@ -25,13 +34,9 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata.title} />
-      <div>
-        <main>{children}</main>
-        <footer>
-          © {new Date().getFullYear()} {data.site.siteMetadata.author}
-        </footer>
-      </div>
+      <Header siteTitle={title} siteSocial={social} />
+      <main>{children}</main>
+      <Footer siteAuthor={author} />
     </>
   );
 };

@@ -4,6 +4,20 @@ module.exports = {
     author: `Lee Morrow`,
     description: `Data Viz Portfolio`,
     siteUrl: `https://leemorrow.dev`,
+    social: [
+      {
+        name: `twitter`,
+        url: `https://twitter.com/theactualee`,
+      },
+      {
+        name: `github`,
+        url: `https://github.com/leemorrowdev`,
+      },
+      {
+        name: `email`,
+        url: `mailto:leemorrowdev@gmail.com`
+      }
+    ],
   },
   plugins: [
     {
