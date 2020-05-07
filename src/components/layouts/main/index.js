@@ -6,13 +6,12 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
 
-import Header from '../header';
-import Footer from '../footer';
+import Header from '../../header';
+import Footer from '../../footer';
 
-const Layout = ({ children }) => {
+const MainLayout = ({ children }) => {
   const {
     site: {
       siteMetadata: { title, author, social },
@@ -41,8 +40,4 @@ const Layout = ({ children }) => {
   );
 };
 
-Layout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
-
-export default Layout;
+export default MainLayout;

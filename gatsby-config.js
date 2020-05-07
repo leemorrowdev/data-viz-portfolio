@@ -55,9 +55,9 @@ module.exports = {
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
-        extensions: [`.mdx`, `.md`],
+        extensions: [`.mdx`],
         defaultLayouts: {
-          default: require.resolve("./src/components/layout/index.js")
+          default: require.resolve("./src/components/layouts/mdx/index.js")
         },
         gatsbyRemarkPlugins: [
           {
@@ -70,6 +70,13 @@ module.exports = {
           { resolve: `gatsby-remark-copy-linked-files` },
           { resolve: `gatsby-remark-smartypants` },
         ],
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `pages`,
+        path: `${__dirname}/src/content/`,
       },
     },
   ],
