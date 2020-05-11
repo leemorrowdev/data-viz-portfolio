@@ -1,3 +1,7 @@
+/**
+ * Component to list all projects
+ */
+
 import React from 'react';
 import { useStaticQuery, Link, graphql } from 'gatsby';
 

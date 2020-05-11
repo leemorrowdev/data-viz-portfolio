@@ -1,3 +1,7 @@
+/**
+ * Component to list all posts
+ */
+
 import React from 'react';
 import { useStaticQuery, Link, graphql } from 'gatsby';
 

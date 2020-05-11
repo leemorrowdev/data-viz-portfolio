@@ -1,12 +1,15 @@
+/**
+ * Main layout component with custom SEO
+ */
+
 import React from 'react';
-import { graphql, Link } from 'gatsby';
+import { graphql } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import MainLayout from '../main';
+import MDXComponents from '../../mdx-components';
 import SEO from '../../seo';
-
-const shortcodes = { Link }; // Provide common components here
 
 const MdxLayout = ({
   data: {
@@ -20,7 +23,7 @@ const MdxLayout = ({
     <MainLayout>
       <h1>{title}</h1>
       <SEO title={title} />
-      <MDXProvider components={shortcodes}>
+      <MDXProvider components={MDXComponents}>
         <MDXRenderer>{body}</MDXRenderer>
       </MDXProvider>
     </MainLayout>
