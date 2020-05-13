@@ -1,14 +1,12 @@
 # [leemorrow.dev](https://leemorrow.dev)
 
----
-
 I created this portfolio site to host data visualizations on statistics, economics, and other data-driven topics. I love working in React, so I used GatsbyJS, a React and GraphQL based Static Site Generator with MDX support to help me rapidly develop new content.
 
 ## Core Libraries
 
 - [GatsbyJS](https://www.gatsbyjs.org/)
 - [ReactJS](https://reactjs.org/)
-- [SASS](https://sass-lang.com/)
+- [Sass](https://sass-lang.com/)
 - [MDX](https://mdxjs.com/)
 - [D3](https://d3js.org/)
 

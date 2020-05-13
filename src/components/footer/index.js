@@ -5,8 +5,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import styles from './footer.module.scss';
+
 const Footer = ({ siteAuthor }) => (
-  <footer>
+  <footer className={styles.footer}>
     © {new Date().getFullYear()} {siteAuthor}
   </footer>
 );

@@ -1,3 +1,5 @@
-.test {
-  color: #0000FF;
+@import '../../sass/variables.scss';
+
+.h1 {
+  color: $color-gray-dark;
 }

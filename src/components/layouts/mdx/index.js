@@ -30,8 +30,8 @@ const MdxLayout = ({
   );
 };
 
-export const pageQuery = graphql`
-  query BlogPostQuery($id: String) {
+export const postQuery = graphql`
+  query PostQuery($id: String) {
     mdx(id: { eq: $id }) {
       id
       body

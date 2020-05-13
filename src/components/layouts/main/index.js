@@ -10,6 +10,7 @@ import Header from '../../header';
 import Footer from '../../footer';
 
 import './main-layout.scss';
+import styles from './main-layout.module.scss';
 
 const MainLayout = ({ children }) => {
   const {
@@ -32,10 +33,10 @@ const MainLayout = ({ children }) => {
   `);
 
   return (
-    <div>
+    <div className={styles.container}>
       <Helmet>
         <link
-          href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap"
           rel="stylesheet"
         />
       </Helmet>
