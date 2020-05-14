@@ -41,8 +41,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `data-viz-portfolio`,
-        short_name: `data-viz`,
+        name: `Lee Morrow`,
+        short_name: `Lee`,
         start_url: `/`,
         background_color: `#F9F9F9`,
         theme_color: `#F9F9F9`,
@@ -57,7 +57,7 @@ module.exports = {
       options: {
         extensions: [`.mdx`],
         defaultLayouts: {
-          default: require.resolve("./src/components/layouts/mdx/index.js")
+          default: require.resolve("./src/components/layout/mdx/index.js")
         },
         gatsbyRemarkPlugins: [
           {

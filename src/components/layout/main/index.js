@@ -6,8 +6,8 @@ import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
 import { Helmet } from 'react-helmet';
 
-import Header from '../../header';
-import Footer from '../../footer';
+import Header from '../header';
+import Footer from '../footer';
 
 import './main-layout.scss';
 import styles from './main-layout.module.scss';
@@ -40,8 +40,8 @@ const MainLayout = ({ children }) => {
           rel="stylesheet"
         />
       </Helmet>
-      <Header siteTitle={title} siteSocial={social} />
-      <main>{children}</main>
+      <Header className={styles.header} siteTitle={title} siteSocial={social} />
+      <main className={styles.main}>{children}</main>
       <Footer siteAuthor={author} />
     </div>
   );

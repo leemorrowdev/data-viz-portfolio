@@ -14,7 +14,7 @@ I created this portfolio site to host data visualizations on statistics, economi
 
 - **`/src/components`**: This directory contains all project components.
 
-- **`/src/components/layouts/main`**: This directory contains the top level layout component for all pages, the layout component for MDX files, and all global styles.
+- **`/src/components/layout/`**: This directory contains the top level layout components for all pages, the layout component for MDX files, and all global styles.
 
 - **`/src/content`**: This directory contains all posts and project pages.
 

@@ -9,7 +9,7 @@ import React from 'react';
 import styles from './header.module.scss';
 
 const Header = ({ siteTitle, siteSocial }) => (
-  <header className={styles.header}>
+  <header className={styles.container}>
     <h1>
       <Link to="/">{siteTitle}</Link>
     </h1>

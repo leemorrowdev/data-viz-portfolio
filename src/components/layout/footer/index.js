@@ -8,7 +8,7 @@ import React from 'react';
 import styles from './footer.module.scss';
 
 const Footer = ({ siteAuthor }) => (
-  <footer className={styles.footer}>
+  <footer className={styles.container}>
     © {new Date().getFullYear()} {siteAuthor}
   </footer>
 );

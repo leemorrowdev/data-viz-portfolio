@@ -8,8 +8,9 @@ import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
 import MainLayout from '../main';
-import MDXComponents from '../../mdx-components';
+import MDXComponents from './components';
 import SEO from '../../seo';
+import styles from './mdx-layout.module.scss';
 
 const MdxLayout = ({
   data: {
@@ -21,11 +22,13 @@ const MdxLayout = ({
 }) => {
   return (
     <MainLayout>
-      <h1>{title}</h1>
-      <SEO title={title} />
-      <MDXProvider components={MDXComponents}>
-        <MDXRenderer>{body}</MDXRenderer>
-      </MDXProvider>
+      <div className={styles.container}>
+        <h1>{title}</h1>
+        <SEO title={title} />
+        <MDXProvider components={MDXComponents}>
+          <MDXRenderer>{body}</MDXRenderer>
+        </MDXProvider>
+      </div>
     </MainLayout>
   );
 };

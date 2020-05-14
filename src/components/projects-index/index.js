@@ -5,13 +5,15 @@
 import React from 'react';
 import { useStaticQuery, Link, graphql } from 'gatsby';
 
+import styles from './projects-index.module.scss';
+
 const ProjectsIndex = () => {
   const {
     allMdx: { edges },
   } = useStaticQuery(projectsQuery);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Awesome MDX Blog</h1>
 
       <ul>

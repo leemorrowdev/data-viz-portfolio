@@ -1,0 +1,12 @@
+@import '../../../sass/variables.scss';
+
+.container {
+  grid-row: 1 / 2;
+  align-self: center;
+  justify-self: center;
+
+  a {
+    text-decoration: none;
+    color: $color-gray-dark;
+  }
+}
