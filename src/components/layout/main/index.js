@@ -40,8 +40,8 @@ const MainLayout = ({ children }) => {
           rel="stylesheet"
         />
       </Helmet>
-      <Header className={styles.header} siteTitle={title} siteSocial={social} />
-      <main className={styles.main}>{children}</main>
+      <Header siteTitle={title} siteSocial={social} />
+      <main>{children}</main>
       <Footer siteAuthor={author} />
     </div>
   );
