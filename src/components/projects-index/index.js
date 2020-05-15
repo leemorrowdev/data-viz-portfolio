@@ -14,7 +14,7 @@ const ProjectsIndex = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Awesome MDX Blog</h1>
+      <h1>Projects</h1>
 
       <ul>
         {edges.map(({ node: post }) => (

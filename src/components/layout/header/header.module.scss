@@ -9,10 +9,12 @@
   a {
     text-decoration: none;
     color: $color-gray-dark;
+    outline : none;
+    padding: 5px 5px;
   }
 
   h1 {
-    font-size: 10rem;
+    font-size: 8rem;
     font-weight: 300;
   }
 }
