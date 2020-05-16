@@ -1,0 +1,41 @@
+/**
+ * Global Styles
+ */
+
+@import './variables.scss';
+@import './mixins.scss';
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond(phone) {
+    font-size: 43.75%;  // 1rem = 7px, 7/16
+  }
+  @include respond(tab-portrait) {
+    font-size: 50%; // 1rem = 8px, 8/16
+  }
+  @include respond(tab-landscape) {
+    font-size: 56.25%; // 1rem = 9px, 9/16
+  }
+  @include respond(desktop) {
+    font-size: 75%; // 1rem = 12px, 12/16
+  }
+}
+
+body {
+  box-sizing: border-box;
+  height: 100vh;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.8rem;
+  line-height: 1.6;
+  color: $color-gray-dark;
+  background-color: $color-gray-light;
+}

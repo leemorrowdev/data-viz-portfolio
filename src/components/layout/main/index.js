@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 import Header from '../header';
 import Footer from '../footer';
 
-import './main-layout.scss';
+import '../../../sass/global.scss';
 import styles from './main-layout.module.scss';
 
 const MainLayout = ({ children }) => {
