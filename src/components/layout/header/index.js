@@ -5,13 +5,14 @@
 import { Link, /*withPrefix*/ } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FaTwitter, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 
 import styles from './header.module.scss';
 
 const icons = {
   'twitter': <FaTwitter />,
   'github': <FaGithub />,
+  'linkedin': <FaLinkedin />,
   'email': <FaEnvelope />
 }
 

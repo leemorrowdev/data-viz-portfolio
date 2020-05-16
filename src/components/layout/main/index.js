@@ -33,17 +33,19 @@ const MainLayout = ({ children }) => {
   `);
 
   return (
-    <div className={styles.container}>
+    <>
       <Helmet>
         <link
           href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,700;1,400&display=swap"
           rel="stylesheet"
         />
       </Helmet>
-      <Header siteTitle={title} siteSocial={social} />
-      <main>{children}</main>
-      <Footer siteAuthor={author} />
-    </div>
+      <div className={styles.container}>
+        <Header siteTitle={title} siteSocial={social} />
+        <main>{children}</main>
+        <Footer siteAuthor={author} />
+      </div>
+    </>
   );
 };
 

@@ -18,10 +18,10 @@ html {
 
 body {
   box-sizing: border-box;
+  height: 100vh;
   font-family: 'Open Sans', sans-serif;
   font-size: 1.8rem;
-  color: $color-gray-dark;
   line-height: 1.6;
-  height: 100vh;
+  color: $color-gray-dark;
   background-color: $color-gray-light;
 }

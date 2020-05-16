@@ -14,6 +14,10 @@ module.exports = {
         url: `https://github.com/leemorrowdev`,
       },
       {
+        name: `linkedin`,
+        url: `https://www.linkedin.com/in/leemorrowdev/`
+      },
+      {
         name: `email`,
         url: `mailto:leemorrowdev@gmail.com`
       }
