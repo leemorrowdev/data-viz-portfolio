@@ -19,9 +19,9 @@ const ProjectsIndex = () => {
       <ul>
         {edges.map(({ node: post }) => (
           <li key={post.id}>
-            <Link to={post.fields.slug}>
-              <h2>{post.frontmatter.title}</h2>
-            </Link>
+            <h2>
+              <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+            </h2>
             <p>{post.excerpt}</p>
           </li>
         ))}

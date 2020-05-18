@@ -10,10 +10,8 @@
   justify-content: center;
 
   .icon {
-    text-decoration: none;
     color: $color-gray-dark;
-    outline: none;
-    padding: 5px 5px;
+    padding: 1rem 1rem;
 
     &:hover,
     &:active {
@@ -24,11 +22,9 @@
   h1 {
     font-size: 8rem;
     font-weight: 300;
-
     a {
-      text-decoration: none;
       color: $color-gray-dark;
-      outline: none;
+      border: none;
     }
 
     @include respond(phone) {
