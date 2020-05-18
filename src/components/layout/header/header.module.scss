@@ -1,4 +1,5 @@
-@import '../../../sass/variables.scss';
+@import '../../../sass/variables';
+@import '../../../sass/mixins';
 
 .container {
   grid-column: 1 / 4;
@@ -18,5 +19,10 @@
   h1 {
     font-size: 8rem;
     font-weight: 300;
+
+    @include respond(phone) {
+      font-size: 6rem;
+    }
   }
+
 }
