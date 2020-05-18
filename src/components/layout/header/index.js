@@ -2,7 +2,7 @@
  * Main header component
  */
 
-import { Link, /*withPrefix*/ } from 'gatsby';
+import { Link /*withPrefix*/ } from 'gatsby';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
@@ -10,11 +10,11 @@ import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
 import styles from './header.module.scss';
 
 const icons = {
-  'twitter': <FaTwitter />,
-  'github': <FaGithub />,
-  'linkedin': <FaLinkedin />,
-  'email': <FaEnvelope />
-}
+  twitter: <FaTwitter />,
+  github: <FaGithub />,
+  linkedin: <FaLinkedin />,
+  email: <FaEnvelope />,
+};
 
 const Header = ({ siteTitle, siteSocial }) => (
   <header className={styles.container}>
@@ -24,6 +24,7 @@ const Header = ({ siteTitle, siteSocial }) => (
     <div>
       {siteSocial.map((platform) => (
         <a
+          className={styles.icon}
           key={platform.url}
           href={platform.url}
           target="_blank"
@@ -33,7 +34,7 @@ const Header = ({ siteTitle, siteSocial }) => (
         </a>
       ))}
     </div>
-    
+
     {/* <a
       href={withPrefix('/resume.pdf')}
       target="_blank"

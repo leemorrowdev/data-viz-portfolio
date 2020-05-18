@@ -9,7 +9,9 @@ import styles from './footer.module.scss';
 
 const Footer = ({ siteAuthor }) => (
   <footer className={styles.container}>
-    <span>© {new Date().getFullYear()} {siteAuthor}</span>
+    <div>
+      © {new Date().getFullYear()} <span className={styles.author}>{siteAuthor}</span>
+    </div>
   </footer>
 );
 

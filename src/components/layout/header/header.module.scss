@@ -9,20 +9,30 @@
   align-items: center;
   justify-content: center;
 
-  a {
+  .icon {
     text-decoration: none;
     color: $color-gray-dark;
-    outline : none;
+    outline: none;
     padding: 5px 5px;
+
+    &:hover,
+    &:active {
+      color: $color-primary-dark;
+    }
   }
 
   h1 {
     font-size: 8rem;
     font-weight: 300;
 
+    a {
+      text-decoration: none;
+      color: $color-gray-dark;
+      outline: none;
+    }
+
     @include respond(phone) {
-      font-size: 6rem;
+      font-size: 5.8rem;
     }
   }
-
 }

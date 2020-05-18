@@ -26,3 +26,9 @@ body {
   color: $color-gray-dark;
   background-color: $color-gray-light;
 }
+
+// Highlighted text
+::selection {
+  background: $color-primary-light;
+}
+

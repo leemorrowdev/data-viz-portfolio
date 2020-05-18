@@ -8,5 +8,10 @@
   a {
     text-decoration: none;
     color: $color-gray-dark;
+
+    &:hover,
+    &:active {
+      color: $color-primary-dark;
+    }
   }
 }
