@@ -37,13 +37,10 @@ h1 {
 
 a {
   text-decoration: none;
-  color: $color-primary-dark;
+  color: $color-primary;
   &:hover,
   &:active {
-    border-bottom: 1px solid $color-primary-dark;
-  }
-  &:link,
-  &:visited {
     color: $color-primary-dark;
+    border-bottom: 1px solid $color-primary-dark;
   }
 }

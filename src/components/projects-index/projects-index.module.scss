@@ -4,14 +4,4 @@
   ul {
     list-style: none;
   }
-
-  h2 a {
-    color: $color-gray-dark;
-
-    &:hover,
-    &:active {
-      color: $color-primary-dark;
-      border: none;
-    }
-  }
 }

@@ -14,14 +14,14 @@ const PostsIndex = () => {
 
   return (
     <div className={styles.container}>
-      <h1>Posts</h1>
+      <h2>Recent Posts</h2>
 
       <ul>
         {edges.map(({ node: post }) => (
           <li key={post.id}>
-            <h2>
+            <h3>
               <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
-            </h2>
+            </h3>
             <p>{post.excerpt}</p>
           </li>
         ))}
