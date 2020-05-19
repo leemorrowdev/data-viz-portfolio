@@ -20,8 +20,11 @@ const ProjectsIndex = () => {
         {edges.map(({ node: post }) => (
           <li key={post.id}>
             <h3>
-              <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+              <Link to={post.fields.slug}>
+                {post.frontmatter.title}
+              </Link>
             </h3>
+            <span>{post.frontmatter.date}</span>
             <p>{post.excerpt}</p>
           </li>
         ))}
@@ -32,13 +35,17 @@ const ProjectsIndex = () => {
 
 const projectsQuery = graphql`
   query projectsIndex {
-    allMdx(filter: { fileAbsolutePath: { regex: "/projects/" } }) {
+    allMdx(
+      sort: { fields: frontmatter___date, order: DESC }
+      filter: { fileAbsolutePath: { regex: "/projects/" } }
+    ) {
       edges {
         node {
           id
           excerpt
           frontmatter {
             title
+            date(formatString: "MMMM DD, YYYY")
           }
           fields {
             slug

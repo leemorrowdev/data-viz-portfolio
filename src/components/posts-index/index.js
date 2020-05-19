@@ -22,6 +22,7 @@ const PostsIndex = () => {
             <h3>
               <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
             </h3>
+            <span>{post.frontmatter.date}</span>
             <p>{post.excerpt}</p>
           </li>
         ))}
@@ -32,13 +33,17 @@ const PostsIndex = () => {
 
 const postsQuery = graphql`
   query postsIndex {
-    allMdx(filter: { fileAbsolutePath: { regex: "/posts/" } }) {
+    allMdx(
+      sort: { fields: frontmatter___date, order: DESC }
+      filter: { fileAbsolutePath: { regex: "/posts/" } }
+    ) {
       edges {
         node {
           id
           excerpt
           frontmatter {
             title
+            date(formatString: "MMMM DD, YYYY")
           }
           fields {
             slug
