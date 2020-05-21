@@ -9,8 +9,10 @@
   align-items: center;
   justify-content: center;
 
+  margin-bottom: 1.6rem;
+
   .icon {
-    color: $color-primary;
+    color: $color-gray-dark;
     padding: 1rem 1rem;
 
     &:hover,

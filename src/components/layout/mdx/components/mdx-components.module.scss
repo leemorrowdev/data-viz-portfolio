@@ -1,5 +1,43 @@
 @import '../../../../sass/variables';
 
 .p {
-  padding-bottom: 1.6rem;
+  margin-bottom: 1.6rem;
+}
+
+.hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid $color-primary-light;
+  margin: 1em 0;
+  padding: 0;
+}
+
+.blockquote {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  p {
+    padding-left: 1.6rem;
+    border-left: 3px solid $color-primary-light;
+    &::before {
+      content: '\201C';
+    }
+    &::after {
+      content: '\201D';
+    }
+  }
+}
+
+.code {
+  background-color: $color-primary-light;
+}
+
+.pre {
+  background-color: $color-primary-light;
+  padding: 1rem;
+}
+
+.li {
+  margin-left: 4ch;
 }

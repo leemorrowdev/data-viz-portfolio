@@ -16,7 +16,7 @@ const MdxLayout = ({
   data: {
     mdx: {
       body,
-      frontmatter: { title },
+      frontmatter: { title, date },
     },
   },
 }) => {
@@ -24,6 +24,7 @@ const MdxLayout = ({
     <MainLayout>
       <div className={styles.container}>
         <h1>{title}</h1>
+        <div className={styles.date}>{date}</div>
         <SEO title={title} />
         <MDXProvider components={MDXComponents}>
           <MDXRenderer>{body}</MDXRenderer>
@@ -40,6 +41,7 @@ export const postQuery = graphql`
       body
       frontmatter {
         title
+        date(formatString: "MMMM DD, YYYY")
       }
     }
   }

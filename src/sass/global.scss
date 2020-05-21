@@ -21,9 +21,9 @@ body {
   box-sizing: border-box;
   height: 100vh;
   font-family: 'Roboto', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 300;
-  line-height: 1.6;
+  line-height: 1.8;
   color: $color-gray-dark;
   background-color: $color-gray-light;
 }
@@ -33,12 +33,13 @@ body {
 }
 
 h1 {
-  color: $color-primary-dark;
+  font-weight: 400;
 }
 
 a {
   text-decoration: none;
-  color: $color-primary;
+  outline: none;
+  color: $color-gray-dark;
   &:hover,
   &:active {
     color: $color-primary-dark;
