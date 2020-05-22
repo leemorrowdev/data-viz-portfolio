@@ -1,21 +1,23 @@
 /**
- * Component to list recent posts
+ * Component to list all posts
+ * Based on https://www.gatsbyjs.org/docs/adding-pagination/
  */
 
 import React from 'react';
-import { useStaticQuery, Link, graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 
-import styles from './recent-posts.module.scss';
+import MainLayout from '../components/layout/main';
+import SEO from '../components/seo';
 
-const RecentPosts = () => {
+const AllPosts = ({ data }) => {
   const {
     allMdx: { edges },
-  } = useStaticQuery(recentPostsQuery);
+  } = data;
 
   return (
-    <div className={styles.container}>
-      <h2>Recent Posts</h2>
-
+    <MainLayout>
+      <h1>All Posts</h1>
+      <SEO title="All Posts" />
       <ul>
         {edges.map(({ node: post }) => (
           <li key={post.id}>
@@ -27,18 +29,17 @@ const RecentPosts = () => {
           </li>
         ))}
       </ul>
-
-      <Link to="/posts">All Posts</Link>
-    </div>
+    </MainLayout>
   );
 };
 
-const recentPostsQuery = graphql`
-  query recentPosts {
+export const postsQuery = graphql`
+  query postsQuery($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
       filter: { fileAbsolutePath: { regex: "/posts/" } }
-      limit: 3
+      limit: $limit
+      skip: $skip
     ) {
       edges {
         node {
@@ -57,4 +58,4 @@ const recentPostsQuery = graphql`
   }
 `;
 
-export default RecentPosts;
+export default AllPosts;
