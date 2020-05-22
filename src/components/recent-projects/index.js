@@ -1,20 +1,20 @@
 /**
- * Component to list all posts
+ * Component to list all projects
  */
 
 import React from 'react';
 import { useStaticQuery, Link, graphql } from 'gatsby';
 
-import styles from './posts-index.module.scss';
+import styles from './recent-projects.module.scss';
 
-const PostsIndex = () => {
+const RecentProjects = () => {
   const {
     allMdx: { edges },
-  } = useStaticQuery(postsQuery);
+  } = useStaticQuery(projectsQuery);
 
   return (
     <div className={styles.container}>
-      <h2>Recent Posts</h2>
+      <h2>Recent Projects</h2>
 
       <ul>
         {edges.map(({ node: post }) => (
@@ -27,15 +27,18 @@ const PostsIndex = () => {
           </li>
         ))}
       </ul>
+
+      <Link to="/projects">All Projects</Link>
     </div>
   );
 };
 
-const postsQuery = graphql`
-  query postsIndex {
+const projectsQuery = graphql`
+  query projectsIndex {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { fileAbsolutePath: { regex: "/posts/" } }
+      filter: { fileAbsolutePath: { regex: "/projects/" } }
+      limit: 3
     ) {
       edges {
         node {
@@ -54,4 +57,4 @@ const postsQuery = graphql`
   }
 `;
 
-export default PostsIndex;
+export default RecentProjects;
