@@ -3,8 +3,8 @@ import { Link } from 'gatsby';
 
 import MainLayout from '../components/layout/main';
 import SEO from '../components/seo';
-import PostsIndex from '../components/posts-index';
-import ProjectsIndex from '../components/projects-index';
+import RecentPosts from '../components/recent-posts';
+import RecentProjects from '../components/recent-projects';
 
 const IndexPage = () => (
   <MainLayout>
@@ -13,8 +13,8 @@ const IndexPage = () => (
     <p>Welcome to your new Gatsby site.</p>
     <p>Now go build something great.</p>
     <Link to="/page-2/">Go to page 2</Link>
-    <PostsIndex/>
-    <ProjectsIndex/>
+    <RecentPosts/>
+    <RecentProjects/>
   </MainLayout>
 );
 
