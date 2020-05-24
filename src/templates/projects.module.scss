@@ -1,0 +1,27 @@
+@import '../sass/mixins';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+
+  li {
+    list-style: none;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: space-around;
+
+    padding: 0 12rem 0 12rem;
+    @include respond(phone) {
+      padding: 0rem;
+    }
+
+    span {
+      width: 10rem;
+      text-align: center;
+    }
+  }
+}

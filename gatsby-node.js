@@ -25,7 +25,7 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       // Generated value based on filepath with "blog" prefix. you
       // don't need a separating "/" before the value because
       // createFilePath returns a path with the leading "/".
-      value: `${value}`,
+      value,
     });
   }
 };
@@ -48,7 +48,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       }
     }
   `);
-  
+
   if (allMdxQuery.errors) {
     reporter.panicOnBuild('🚨  ERROR: Loading "createPages" query');
   }
@@ -94,7 +94,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Create posts pages
   const posts = postsQuery.data.allMdx.edges;
-  const postsPerPage = 6;
+  const postsPerPage = 1;
   const numPostPages = Math.ceil(posts.length / postsPerPage);
   Array.from({ length: numPostPages }).forEach((_, i) => {
     createPage({
@@ -113,7 +113,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     query {
       allMdx(
         sort: { fields: [frontmatter___date], order: DESC }
-        filter: { fileAbsolutePath: { regex: "/posts/" } }
+        filter: { fileAbsolutePath: { regex: "/projects/" } }
       ) {
         edges {
           node {
@@ -133,7 +133,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // Create projects pages
   const projects = projectsQuery.data.allMdx.edges;
-  const projectsPerPage = 6;
+  const projectsPerPage = 1;
   const numProjectPages = Math.ceil(projects.length / projectsPerPage);
   Array.from({ length: numProjectPages }).forEach((_, i) => {
     createPage({
@@ -147,5 +147,4 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   });
-
 };
