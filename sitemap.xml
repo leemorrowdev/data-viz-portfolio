@@ -7,7 +7,11 @@
 <url> <loc>https://leemorrow.dev/projects/project-one/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leemorrow.dev/projects/project-two/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leemorrow.dev/posts</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leemorrow.dev/posts/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leemorrow.dev/posts/3</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leemorrow.dev/posts/4</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leemorrow.dev/projects</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
+<url> <loc>https://leemorrow.dev/projects/2</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leemorrow.dev/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 <url> <loc>https://leemorrow.dev/page-2/</loc> <changefreq>daily</changefreq> <priority>0.7</priority> </url>
 </urlset>
