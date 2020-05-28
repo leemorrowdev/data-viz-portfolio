@@ -4,29 +4,31 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
-// Based on https://www.gatsbyjs.org/docs/mdx/programmatically-creating-pages/
+// Based on:
+// https://www.gatsbyjs.org/docs/mdx/programmatically-creating-pages/
+// https://www.gatsbyjs.org/docs/adding-pagination/
 
-const path = require(`path`)
-const { createFilePath } = require(`gatsby-source-filesystem`)
+const path = require(`path`);
+const { createFilePath } = require(`gatsby-source-filesystem`);
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
   if (node.internal.type === `Mdx`) {
-    const value = createFilePath({ node, getNode })
+    const value = createFilePath({ node, getNode });
 
     createNodeField({
       name: `slug`,
       node,
       value,
-    })
+    });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
   const mdxTemplate = path.resolve(`./src/templates/mdx/index.js`);
-  
+
   // Create posts pages
   const postsTemplate = path.resolve(`./src/templates/posts/index.js`);
   const postsQuery = await graphql(`
@@ -38,6 +40,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       ) {
         edges {
           node {
+            id
             fields {
               slug
             }
@@ -58,10 +61,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: node.fields.slug,
       component: mdxTemplate,
       context: { id: node.id },
-    })
+    });
   });
 
-  const postsPerPage = 1;
+  const postsPerPage = 2;
   const numPostPages = Math.ceil(posts.length / postsPerPage);
 
   Array.from({ length: numPostPages }).forEach((_, i) => {
@@ -88,6 +91,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       ) {
         edges {
           node {
+            id
             fields {
               slug
             }
@@ -108,10 +112,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       path: node.fields.slug,
       component: mdxTemplate,
       context: { id: node.id },
-    })
+    });
   });
 
-  const projectsPerPage = 1;
+  const projectsPerPage = 6;
   const numProjectPages = Math.ceil(projects.length / projectsPerPage);
 
   Array.from({ length: numProjectPages }).forEach((_, i) => {
@@ -126,4 +130,4 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       },
     });
   });
-}
+};

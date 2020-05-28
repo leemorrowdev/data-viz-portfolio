@@ -34,8 +34,8 @@ const MdxLayout = ({
   );
 };
 
-export const postQuery = graphql`
-  query PostQuery($id: String) {
+export const ContentQuery = graphql`
+  query ContentQuery($id: String) {
     mdx(id: { eq: $id }) {
       id
       body

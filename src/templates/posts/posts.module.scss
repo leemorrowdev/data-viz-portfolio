@@ -1,3 +1,4 @@
+@import '../../sass/variables';
 @import '../../sass/mixins';
 
 .container {
@@ -12,15 +13,35 @@
 
   .pagination {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    text-align: center;
 
-    padding: 0 12rem 0 12rem;
+    padding: 4rem 12rem 0rem 12rem;
+    @include respond(tab-port) {
+      padding: 4rem 10rem 0rem 10rem;
+    }
     @include respond(phone) {
-      padding: 0rem;
+      padding: 4rem 6rem 0rem 6rem;
     }
 
-    span {
-      text-align: center;
+    .numbers {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+
+      .active {
+        color: $color-primary-dark;
+        pointer-events: none;
+        cursor: default;
+      }
+
+      a {
+        color: inherit;
+      }
+    }
+
+    .text {
+      width: 8rem;
     }
   }
 }
