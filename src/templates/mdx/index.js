@@ -7,9 +7,9 @@ import { graphql } from 'gatsby';
 import { MDXProvider } from '@mdx-js/react';
 import { MDXRenderer } from 'gatsby-plugin-mdx';
 
-import MainLayout from '../main';
+import MainLayout from '../../components/layout/main';
 import MDXComponents from './components';
-import SEO from '../../seo';
+import SEO from '../../components/seo';
 import styles from './mdx-layout.module.scss';
 
 const MdxLayout = ({

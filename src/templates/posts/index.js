@@ -6,8 +6,8 @@
 import React from 'react';
 import { Link, graphql } from 'gatsby';
 
-import MainLayout from '../components/layout/main';
-import SEO from '../components/seo';
+import MainLayout from '../../components/layout/main';
+import SEO from '../../components/seo';
 import styles from './posts.module.scss';
 
 const AllPosts = ({ data, pageContext }) => {
@@ -36,23 +36,32 @@ const AllPosts = ({ data, pageContext }) => {
           </ul>
         </div>
         <div className={styles.pagination}>
-          {/* Display for all pages but the first */}
           <span>
-            {currentPage !== 1 && (
+            {!(currentPage === 1) && (
               <Link
-                to={`/posts/${currentPage - 1 === 1 ? '/' : currentPage - 1}`}
-                rel="prev"
+                to={`/posts/${currentPage - 1 === 1 ? '' : currentPage - 1}`}
               >
-                Previous Page
+                Previous
               </Link>
             )}
           </span>
-          <span className={styles.current}>{currentPage}</span>
-          {/* Display for all pages but the last */}
+          {/* <span className={styles.single}>{currentPage}</span> */}
+          {Array.from({ length: numPages }, (_, i) => {
+            const pageNumber = i + 1;
+            return (
+              <span className={styles.all}>
+                {pageNumber === 1 ? (
+                  <Link to={`/posts/`}>1</Link>
+                ) : (
+                  <Link to={`/posts/${pageNumber}`}>{pageNumber}</Link>
+                )}
+              </span>
+            );
+          })}
           <span>
             {currentPage !== numPages && (
               <Link to={`/posts/${currentPage + 1}`} rel="next">
-                Next Page
+                Next
               </Link>
             )}
           </span>
@@ -74,6 +83,9 @@ export const postsQuery = graphql`
         node {
           id
           excerpt
+          fields {
+            slug
+          }
           frontmatter {
             title
             date(formatString: "MMMM DD, YYYY")
