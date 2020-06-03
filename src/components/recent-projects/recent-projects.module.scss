@@ -1,12 +1,21 @@
 @import '../../sass/variables.scss';
+@import '../../sass/mixins';
 
 .container {
   margin-top: 2rem;
   ul {
-    list-style: none;
     margin-top: 2rem;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
     li {
-      margin-bottom: 2rem;
+      margin: 2rem;
+      max-width: 300px;
+      @include respond(phone) {
+        max-width: 400px;
+      }
       span {
         font-size: 1.4rem;
       }
