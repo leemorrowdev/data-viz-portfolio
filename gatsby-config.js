@@ -15,12 +15,12 @@ module.exports = {
       },
       {
         name: `linkedin`,
-        url: `https://www.linkedin.com/in/leemorrowdev/`
+        url: `https://www.linkedin.com/in/leemorrowdev/`,
       },
       {
         name: `email`,
-        url: `mailto:leemorrowdev@gmail.com`
-      }
+        url: `mailto:leemorrowdev@gmail.com`,
+      },
     ],
   },
   plugins: [
@@ -66,7 +66,7 @@ module.exports = {
       options: {
         extensions: [`.mdx`],
         defaultLayouts: {
-          default: require.resolve("./src/templates/mdx/index.js")
+          default: require.resolve("./src/templates/mdx/index.js"),
         },
         gatsbyRemarkPlugins: [
           {
@@ -95,6 +95,6 @@ module.exports = {
         path: `${__dirname}/src/content/projects`,
       },
     },
-    `gatsby-plugin-sass`
+    `gatsby-plugin-sass`,
   ],
 }

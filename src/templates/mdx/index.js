@@ -2,15 +2,15 @@
  * Main layout component with custom SEO
  */
 
-import React from 'react';
-import { graphql } from 'gatsby';
-import { MDXProvider } from '@mdx-js/react';
-import { MDXRenderer } from 'gatsby-plugin-mdx';
+import React from "react"
+import { graphql } from "gatsby"
+import { MDXProvider } from "@mdx-js/react"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import MainLayout from '../../components/layout/main';
-import MDXComponents from './components';
-import SEO from '../../components/seo';
-import styles from './mdx-layout.module.scss';
+import MainLayout from "../../components/layout/main"
+import MDXComponents from "./components"
+import SEO from "../../components/seo"
+import styles from "./mdx-layout.module.scss"
 
 const MdxLayout = ({
   data: {
@@ -31,8 +31,8 @@ const MdxLayout = ({
         </MDXProvider>
       </div>
     </MainLayout>
-  );
-};
+  )
+}
 
 export const ContentQuery = graphql`
   query ContentQuery($id: String) {
@@ -45,6 +45,6 @@ export const ContentQuery = graphql`
       }
     }
   }
-`;
+`
 
-export default MdxLayout;
+export default MdxLayout

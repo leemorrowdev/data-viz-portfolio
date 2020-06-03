@@ -3,19 +3,19 @@
  * Based on https://www.gatsbyjs.org/docs/adding-pagination/
  */
 
-import React from 'react';
-import { Link, graphql } from 'gatsby';
+import React from "react"
+import { Link, graphql } from "gatsby"
 
-import MainLayout from '../../components/layout/main';
-import SEO from '../../components/seo';
-import styles from './posts.module.scss';
+import MainLayout from "../../components/layout/main"
+import SEO from "../../components/seo"
+import styles from "./posts.module.scss"
 
 const AllPosts = ({ data, pageContext }) => {
   const {
     allMdx: { edges },
-  } = data;
+  } = data
 
-  const { currentPage, numPages } = pageContext;
+  const { currentPage, numPages } = pageContext
 
   return (
     <MainLayout>
@@ -39,7 +39,7 @@ const AllPosts = ({ data, pageContext }) => {
           <span className={styles.text}>
             {!(currentPage === 1) && (
               <Link
-                to={`/posts/${currentPage - 1 === 1 ? '' : currentPage - 1}`}
+                to={`/posts/${currentPage - 1 === 1 ? "" : currentPage - 1}`}
               >
                 Previous
               </Link>
@@ -47,16 +47,19 @@ const AllPosts = ({ data, pageContext }) => {
           </span>
           <span className={styles.numbers}>
             {Array.from({ length: numPages }, (_, i) => {
-              const pageNumber = i + 1;
+              const pageNumber = i + 1
               return (
-                <span key={pageNumber} className={pageNumber === currentPage ? styles.active : ''}>
+                <span
+                  key={pageNumber}
+                  className={pageNumber === currentPage ? styles.active : ""}
+                >
                   {pageNumber === 1 ? (
                     <Link to={`/posts/`}>1</Link>
                   ) : (
                     <Link to={`/posts/${pageNumber}`}>{pageNumber}</Link>
                   )}
                 </span>
-              );
+              )
             })}
           </span>
           <span className={styles.text}>
@@ -69,8 +72,8 @@ const AllPosts = ({ data, pageContext }) => {
         </div>
       </div>
     </MainLayout>
-  );
-};
+  )
+}
 
 export const postsQuery = graphql`
   query postsQuery($skip: Int!, $limit: Int!) {
@@ -98,6 +101,6 @@ export const postsQuery = graphql`
       }
     }
   }
-`;
+`
 
-export default AllPosts;
+export default AllPosts

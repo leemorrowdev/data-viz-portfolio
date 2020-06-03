@@ -2,19 +2,19 @@
  * Main header component
  */
 
-import { Link /*withPrefix*/ } from 'gatsby';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from 'react-icons/fa';
+import { Link /*withPrefix*/ } from "gatsby"
+import PropTypes from "prop-types"
+import React from "react"
+import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa"
 
-import styles from './header.module.scss';
+import styles from "./header.module.scss"
 
 const icons = {
   twitter: <FaTwitter />,
   github: <FaGithub />,
   linkedin: <FaLinkedin />,
   email: <FaEnvelope />,
-};
+}
 
 const Header = ({ siteTitle, siteSocial }) => (
   <header className={styles.container}>
@@ -22,7 +22,7 @@ const Header = ({ siteTitle, siteSocial }) => (
       <Link to="/">{siteTitle}</Link>
     </h1>
     <div>
-      {siteSocial.map((platform) => (
+      {siteSocial.map(platform => (
         <a
           className={styles.icon}
           key={platform.url}
@@ -43,16 +43,16 @@ const Header = ({ siteTitle, siteSocial }) => (
       Resume
     </a> */}
   </header>
-);
+)
 
 Header.propTypes = {
   siteTitle: PropTypes.string,
   siteSocial: PropTypes.array,
-};
+}
 
 Header.defaultProps = {
   siteTitle: ``,
   siteSocial: [],
-};
+}
 
-export default Header;
+export default Header

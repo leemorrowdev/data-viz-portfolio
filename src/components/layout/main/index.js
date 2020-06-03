@@ -2,15 +2,15 @@
  * Main layout component
  */
 
-import React from 'react';
-import { useStaticQuery, graphql } from 'gatsby';
-import { Helmet } from 'react-helmet';
+import React from "react"
+import { useStaticQuery, graphql } from "gatsby"
+import { Helmet } from "react-helmet"
 
-import Header from '../header';
-import Footer from '../footer';
+import Header from "../header"
+import Footer from "../footer"
 
-import '../../../sass/global.scss';
-import styles from './main-layout.module.scss';
+import "../../../sass/global.scss"
+import styles from "./main-layout.module.scss"
 
 const MainLayout = ({ children }) => {
   const {
@@ -30,7 +30,7 @@ const MainLayout = ({ children }) => {
         }
       }
     }
-  `);
+  `)
 
   return (
     <>
@@ -46,7 +46,7 @@ const MainLayout = ({ children }) => {
         <Footer siteAuthor={author} />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default MainLayout;
+export default MainLayout

@@ -2,9 +2,9 @@
  * MDX component styles
  */
 
-import React from 'react';
+import React from "react"
 
-import styles from './mdx-components.module.scss';
+import styles from "./mdx-components.module.scss"
 
 const MDXComponents = {
   p: ({ children, ...props }) => (
@@ -39,6 +39,6 @@ const MDXComponents = {
       {children}
     </li>
   ),
-};
+}
 
-export default MDXComponents;
+export default MDXComponents

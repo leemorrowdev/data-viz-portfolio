@@ -2,15 +2,15 @@
  * Component to list recent posts
  */
 
-import React from 'react';
-import { useStaticQuery, Link, graphql } from 'gatsby';
+import React from "react"
+import { useStaticQuery, Link, graphql } from "gatsby"
 
-import styles from './recent-posts.module.scss';
+import styles from "./recent-posts.module.scss"
 
 const RecentPosts = () => {
   const {
     allMdx: { edges },
-  } = useStaticQuery(recentPostsQuery);
+  } = useStaticQuery(recentPostsQuery)
 
   return (
     <div className={styles.container}>
@@ -30,8 +30,8 @@ const RecentPosts = () => {
 
       <Link to="/posts">All Posts</Link>
     </div>
-  );
-};
+  )
+}
 
 const recentPostsQuery = graphql`
   query recentPosts {
@@ -55,6 +55,6 @@ const recentPostsQuery = graphql`
       }
     }
   }
-`;
+`
 
-export default RecentPosts;
+export default RecentPosts
