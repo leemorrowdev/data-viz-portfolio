@@ -7,21 +7,27 @@
   justify-content: space-between;
   height: 100%;
 
-  ul {
-    margin-top: 2rem;
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-
-    li {
-      margin: 1rem;
-      max-width: 200px;
-      @include respond(phone) {
-        max-width: 300px;
-      }
-      span {
-        font-size: 1.4rem;
+  .content {
+    .nav {
+      margin-bottom: 2rem;
+    }
+    ul {
+      margin-top: 2rem;
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+  
+      li {
+        margin: 1rem;
+        span {
+          font-size: 1.4rem;
+        }
+        
+        max-width: 200px;
+        @include respond(phone) {
+          max-width: 300px;
+        }
       }
     }
   }

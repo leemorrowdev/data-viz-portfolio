@@ -41,13 +41,16 @@ const AllProjects = ({ data, pageContext }) => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <div className={styles.projects}>
+        <div className={styles.content}>
+          <div className={styles.nav}>
+            <Link to="/">&larr; Home</Link>
+          </div>
           <h1>All Projects</h1>
           <SEO title="All Projects" />
           <ul>
             {nodes.map(project => (
               <li key={project.id}>
-                <Link to={project.fields.slug}>
+                <Link to={`/projects${project.fields.slug}`}>
                   <div className={styles.image}>
                     <Img fluid={project.childImageSharp.fluid} />
                   </div>

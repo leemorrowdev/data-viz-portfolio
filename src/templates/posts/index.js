@@ -20,14 +20,17 @@ const AllPosts = ({ data, pageContext }) => {
   return (
     <MainLayout>
       <div className={styles.container}>
-        <div className={styles.posts}>
+        <div className={styles.content}>
+          <div className={styles.nav}>
+            <Link to="/">&larr; Home</Link>
+          </div>
           <h1>All Posts</h1>
           <SEO title="All Posts" />
           <ul>
             {edges.map(({ node: post }) => (
               <li key={post.id}>
                 <h3>
-                  <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+                  <Link to={`/posts${post.fields.slug}`}>{post.frontmatter.title}</Link>
                 </h3>
                 <span>{post.frontmatter.date}</span>
                 <p>{post.excerpt}</p>

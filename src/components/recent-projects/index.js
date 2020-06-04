@@ -40,7 +40,7 @@ const RecentProjects = () => {
       <ul>
         {nodes.map(project => (
           <li key={project.id}>
-            <Link to={project.fields.slug}>
+            <Link to={`/projects${project.fields.slug}`}>
               <div className={styles.image}>
                 <Img fluid={project.childImageSharp.fluid} />
               </div>
@@ -50,7 +50,7 @@ const RecentProjects = () => {
           </li>
         ))}
       </ul>
-      <Link to="/projects">All Projects</Link>
+      <Link to="/projects">All Projects &rarr;</Link>
     </div>
   )
 }

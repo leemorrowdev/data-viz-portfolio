@@ -58,7 +58,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const posts = postsQuery.data.allMdx.edges
   posts.forEach(({ node }, index) => {
     createPage({
-      path: node.fields.slug,
+      path: `/posts${node.fields.slug}`,
       component: mdxTemplate,
       context: { id: node.id },
     })
@@ -109,7 +109,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const projects = projectsQuery.data.allMdx.edges
   projects.forEach(({ node }, index) => {
     createPage({
-      path: node.fields.slug,
+      path: `/projects${node.fields.slug}`,
       component: mdxTemplate,
       context: { id: node.id },
     })

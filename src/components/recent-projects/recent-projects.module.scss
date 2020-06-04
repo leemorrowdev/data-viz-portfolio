@@ -13,13 +13,16 @@
 
     li {
       margin: 1rem;
-      max-width: 200px;
-      
-      @include respond(phone) {
-        max-width: 300px;
+      a:hover {
+        border-bottom: 0px;
       }
       span {
         font-size: 1.4rem;
+      }
+      
+      max-width: 200px;
+      @include respond(phone) {
+        max-width: 300px;
       }
     }
   }

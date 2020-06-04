@@ -20,7 +20,7 @@ const RecentPosts = () => {
         {edges.map(({ node: post }) => (
           <li key={post.id}>
             <h3>
-              <Link to={post.fields.slug}>{post.frontmatter.title}</Link>
+              <Link to={`/posts${post.fields.slug}`}>{post.frontmatter.title}</Link>
             </h3>
             <span>{post.frontmatter.date}</span>
             <p>{post.excerpt}</p>
@@ -28,7 +28,7 @@ const RecentPosts = () => {
         ))}
       </ul>
 
-      <Link to="/posts">All Posts</Link>
+      <Link to="/posts">All Posts &rarr;</Link>
     </div>
   )
 }
