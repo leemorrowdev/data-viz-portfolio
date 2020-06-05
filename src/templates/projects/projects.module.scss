@@ -20,8 +20,13 @@
   
       li {
         margin: 1rem;
-        a:hover {
-          border-bottom: 0px;
+        a {
+          color: $color-gray-dark;
+          font-weight:300;
+          &:hover {
+            color: $color-primary-dark;
+            border: none;
+          }
         }
         span {
           font-size: 1.4rem;
