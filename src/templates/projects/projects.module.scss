@@ -20,6 +20,9 @@
   
       li {
         margin: 1rem;
+        a:hover {
+          border-bottom: 0px;
+        }
         span {
           font-size: 1.4rem;
         }

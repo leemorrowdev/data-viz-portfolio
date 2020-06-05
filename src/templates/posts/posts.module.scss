@@ -11,11 +11,20 @@
     .nav {
       margin-bottom: 2rem;
     }
-    li {
+    ul {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
       list-style: none;
   
-      a:hover {
-        border-bottom: 0px;
+      li {
+        margin-bottom: 2rem;
+  
+        a:hover {
+          border-bottom: 0px;
+        }
+        span {
+          font-size: 1.4rem;
+        }
       }
     }
   }

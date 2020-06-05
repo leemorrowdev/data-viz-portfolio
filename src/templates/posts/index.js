@@ -29,11 +29,15 @@ const AllPosts = ({ data, pageContext }) => {
           <ul>
             {edges.map(({ node: post }) => (
               <li key={post.id}>
-                <h3>
-                  <Link to={`/posts${post.fields.slug}`}>{post.frontmatter.title}</Link>
-                </h3>
-                <span>{post.frontmatter.date}</span>
-                <p>{post.excerpt}</p>
+                <Link to={`/posts${post.fields.slug}`}>
+                  <div>
+                    <h3>
+                      {post.frontmatter.title}
+                    </h3>
+                    <span>{post.frontmatter.date}</span>
+                    <p>{post.excerpt}</p>
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>

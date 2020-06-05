@@ -51,11 +51,13 @@ const AllProjects = ({ data, pageContext }) => {
             {nodes.map(project => (
               <li key={project.id}>
                 <Link to={`/projects${project.fields.slug}`}>
-                  <div className={styles.image}>
-                    <Img fluid={project.childImageSharp.fluid} />
+                  <div>
+                    <div className={styles.image}>
+                      <Img fluid={project.childImageSharp.fluid} />
+                    </div>
+                    <h4>{project.frontmatter.title}</h4>
+                    <span>{project.frontmatter.date}</span>
                   </div>
-                  <h4>{project.frontmatter.title}</h4>
-                  <span>{project.frontmatter.date}</span>
                 </Link>
               </li>
             ))}
