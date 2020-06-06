@@ -30,7 +30,10 @@ const AllProjects = ({ data, pageContext }) => {
           <ul>
             {edges.map(({ node: project }) => (
               <li key={project.id}>
-                <Link to={`/projects${project.fields.slug}`}>
+                <Link
+                  to={`/projects${project.fields.slug}`}
+                  state={{ currentPage }}
+                >
                   <div>
                     <div className={styles.image}>
                       <Img

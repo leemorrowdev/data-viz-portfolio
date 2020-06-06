@@ -29,7 +29,7 @@ const AllPosts = ({ data, pageContext }) => {
           <ul>
             {edges.map(({ node: post }) => (
               <li key={post.id}>
-                <Link to={`/posts${post.fields.slug}`}>
+                <Link to={`/posts${post.fields.slug}`} state={{ currentPage }}>
                   <div>
                     <h3>{post.frontmatter.title}</h3>
                     <span>{post.frontmatter.date}</span>

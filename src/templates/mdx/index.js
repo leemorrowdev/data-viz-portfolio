@@ -13,6 +13,7 @@ import SEO from "../../components/seo"
 import styles from "./mdx-layout.module.scss"
 
 const MdxLayout = ({
+  location,
   data: {
     mdx: {
       body,
@@ -24,12 +25,32 @@ const MdxLayout = ({
   const postsMatch = /\/posts\//.test(fileAbsolutePath)
   const projectsMatch = /\/projects\//.test(fileAbsolutePath)
 
+  const {
+    state: { currentPage },
+  } = location || {}
+
   return (
     <MainLayout>
       <div className={styles.container}>
         <div className={styles.nav}>
-          {postsMatch && <Link to="/posts">&larr; All Posts</Link>}
-          {projectsMatch && <Link to="/projects">&larr; All Projects</Link>}
+          {postsMatch && (
+            <Link
+              to={`/posts/${
+                currentPage ? (currentPage === 1 ? "" : currentPage) : ""
+              }`}
+            >
+              &larr; All Posts
+            </Link>
+          )}
+          {projectsMatch && (
+            <Link
+              to={`/projects/${
+                currentPage ? (currentPage === 1 ? "" : currentPage) : ""
+              }`}
+            >
+              &larr; All Projects
+            </Link>
+          )}
         </div>
         <h1>{title}</h1>
         <div className={styles.date}>{date}</div>
