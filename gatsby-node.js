@@ -14,8 +14,28 @@ const { createFilePath } = require(`gatsby-source-filesystem`)
 exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions
 
+  // Create mdx nodes
   if (node.internal.type === `Mdx`) {
     const value = createFilePath({ node, getNode })
+
+    const {
+      sourceInstanceName,
+      absolutePath,
+      internal: { type },
+    } = getNode(node.parent)
+
+    // Create featured image node field on project Mdx nodes
+    if (sourceInstanceName === "projects" && type === "File") {
+      // Use Mdx node path for featuredImage path
+      const ext = path.extname(absolutePath)
+      // Swap extensions
+      const featuredImage = absolutePath.replace(ext, ".png")
+      createNodeField({
+        name: `featuredImage`,
+        node,
+        value: featuredImage,
+      })
+    }
 
     createNodeField({
       name: `slug`,

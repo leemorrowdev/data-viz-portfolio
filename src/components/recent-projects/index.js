@@ -10,40 +10,22 @@ import styles from "./recent-projects.module.scss"
 
 const RecentProjects = () => {
   const {
-    allMdx: { edges: mdxEdges },
-    allFile: { edges: fileEdges },
+    allMdx: { edges },
   } = useStaticQuery(recentProjectsQuery)
-
-  // Combine image and Mdx nodes
-  const nodes = mdxEdges.map(mdxEdge => {
-    const {
-      node: mdxNode,
-      node: {
-        fields: { slug },
-      },
-    } = mdxEdge
-    const fileEdge = fileEdges.find(fileEdge => {
-      const {
-        node: { relativeDirectory },
-      } = fileEdge
-      return slug.slice(1, -1) === relativeDirectory
-    })
-    const { node: fileNode } = fileEdge
-
-    return { ...mdxNode, ...fileNode }
-  })
 
   return (
     <div className={styles.container}>
       <h2>Recent Projects</h2>
 
       <ul>
-        {nodes.map(project => (
+        {edges.map(({ node: project }) => (
           <li key={project.id}>
             <Link to={`/projects${project.fields.slug}`}>
               <div>
                 <div className={styles.image}>
-                  <Img fluid={project.childImageSharp.fluid} />
+                  <Img
+                    fluid={project.fields.featuredImage.childImageSharp.fluid}
+                  />
                 </div>
                 <h4>{project.frontmatter.title}</h4>
                 <span>{project.frontmatter.date}</span>
@@ -59,25 +41,6 @@ const RecentProjects = () => {
 
 const recentProjectsQuery = graphql`
   query recentProjects {
-    allFile(
-      filter: {
-        sourceInstanceName: { eq: "projects" }
-        extension: { eq: "png" }
-        name: { eq: "image" }
-      }
-      limit: 1000
-    ) {
-      edges {
-        node {
-          relativeDirectory
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
       filter: { fileAbsolutePath: { regex: "/projects/" } }
@@ -86,12 +49,19 @@ const recentProjectsQuery = graphql`
       edges {
         node {
           id
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-          }
           fields {
+            featuredImage {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
           }
         }
       }

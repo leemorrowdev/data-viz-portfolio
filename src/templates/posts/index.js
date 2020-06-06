@@ -31,9 +31,7 @@ const AllPosts = ({ data, pageContext }) => {
               <li key={post.id}>
                 <Link to={`/posts${post.fields.slug}`}>
                   <div>
-                    <h3>
-                      {post.frontmatter.title}
-                    </h3>
+                    <h3>{post.frontmatter.title}</h3>
                     <span>{post.frontmatter.date}</span>
                     <p>{post.excerpt}</p>
                   </div>

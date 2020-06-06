@@ -23,6 +23,8 @@ module.exports = {
       },
     ],
   },
+  // Associate project image path string with absolutePath node
+  mapping: { "Mdx.fields.featuredImage": `File.absolutePath` },
   plugins: [
     {
       resolve: `gatsby-plugin-google-analytics`,

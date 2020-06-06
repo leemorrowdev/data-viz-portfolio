@@ -13,30 +13,10 @@ import styles from "./projects.module.scss"
 
 const AllProjects = ({ data, pageContext }) => {
   const {
-    allMdx: { edges: mdxEdges },
-    allFile: { edges: fileEdges },
+    allMdx: { edges },
   } = data
 
   const { currentPage, numPages } = pageContext
-
-  // Combine image and Mdx nodes
-  const nodes = mdxEdges.map(mdxEdge => {
-    const {
-      node: mdxNode,
-      node: {
-        fields: { slug },
-      },
-    } = mdxEdge
-    const fileEdge = fileEdges.find(fileEdge => {
-      const {
-        node: { relativeDirectory },
-      } = fileEdge
-      return slug.slice(1, -1) === relativeDirectory
-    })
-    const { node: fileNode } = fileEdge
-
-    return { ...mdxNode, ...fileNode }
-  })
 
   return (
     <MainLayout>
@@ -48,12 +28,16 @@ const AllProjects = ({ data, pageContext }) => {
           <h1>All Projects</h1>
           <SEO title="All Projects" />
           <ul>
-            {nodes.map(project => (
+            {edges.map(({ node: project }) => (
               <li key={project.id}>
                 <Link to={`/projects${project.fields.slug}`}>
                   <div>
                     <div className={styles.image}>
-                      <Img fluid={project.childImageSharp.fluid} />
+                      <Img
+                        fluid={
+                          project.fields.featuredImage.childImageSharp.fluid
+                        }
+                      />
                     </div>
                     <h4>{project.frontmatter.title}</h4>
                     <span>{project.frontmatter.date}</span>
@@ -105,26 +89,6 @@ const AllProjects = ({ data, pageContext }) => {
 
 export const projectsQuery = graphql`
   query projectsQuery($skip: Int!, $limit: Int!) {
-    allFile(
-      filter: {
-        sourceInstanceName: { eq: "projects" }
-        extension: { eq: "png" }
-        name: { eq: "image" }
-      }
-      limit: $limit
-      skip: $skip
-    ) {
-      edges {
-        node {
-          relativeDirectory
-          childImageSharp {
-            fluid {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-      }
-    }
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
       filter: { fileAbsolutePath: { regex: "/projects/" } }
@@ -134,13 +98,19 @@ export const projectsQuery = graphql`
       edges {
         node {
           id
-          excerpt
-          frontmatter {
-            title
-            date(formatString: "MMMM DD, YYYY")
-          }
           fields {
+            featuredImage {
+              childImageSharp {
+                fluid {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             slug
+          }
+          frontmatter {
+            date(formatString: "MMMM DD, YYYY")
+            title
           }
         }
       }

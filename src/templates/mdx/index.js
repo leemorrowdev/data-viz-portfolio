@@ -3,7 +3,7 @@
  */
 
 import React from "react"
-import {Link, graphql } from "gatsby"
+import { Link, graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
@@ -21,9 +21,8 @@ const MdxLayout = ({
     },
   },
 }) => {
-
-  const postsMatch = /\/posts\//.test(fileAbsolutePath);
-  const projectsMatch = /\/projects\//.test(fileAbsolutePath);
+  const postsMatch = /\/posts\//.test(fileAbsolutePath)
+  const projectsMatch = /\/projects\//.test(fileAbsolutePath)
 
   return (
     <MainLayout>
