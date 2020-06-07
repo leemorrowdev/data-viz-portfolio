@@ -46,7 +46,7 @@ const AllPosts = ({ data, pageContext }) => {
               <Link
                 to={`/posts/${currentPage - 1 === 1 ? "" : currentPage - 1}`}
               >
-                Previous
+                &larr;
               </Link>
             )}
           </span>
@@ -70,7 +70,7 @@ const AllPosts = ({ data, pageContext }) => {
           <span className={styles.text}>
             {currentPage !== numPages && (
               <Link to={`/posts/${currentPage + 1}`} rel="next">
-                Next
+                &rarr;
               </Link>
             )}
           </span>
