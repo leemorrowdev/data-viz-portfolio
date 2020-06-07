@@ -45,10 +45,7 @@
     justify-content: space-between;
     text-align: center;
 
-    padding: 4rem 12rem 0rem 12rem;
-    @include respond(tab-port) {
-      padding: 4rem 10rem 0rem 10rem;
-    }
+    padding: 4rem 20rem 0rem 20rem;
     @include respond(phone) {
       padding: 4rem 6rem 0rem 6rem;
     }
