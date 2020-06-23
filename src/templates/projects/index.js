@@ -94,7 +94,7 @@ export const projectsQuery = graphql`
   query projectsQuery($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { fileAbsolutePath: { regex: "/projects/" } }
+      filter: { fileAbsolutePath: { regex: "/src\/content\/projects/" } }
       limit: $limit
       skip: $skip
     ) {

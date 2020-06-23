@@ -56,7 +56,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       allMdx(
         sort: { fields: [frontmatter___date], order: DESC }
         limit: 1000
-        filter: { fileAbsolutePath: { regex: "/posts/" } }
+        filter: { fileAbsolutePath: { regex: "/src\/content\/posts/" } }
       ) {
         edges {
           node {
@@ -107,7 +107,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       allMdx(
         sort: { fields: [frontmatter___date], order: DESC }
         limit: 1000
-        filter: { fileAbsolutePath: { regex: "/projects/" } }
+        filter: { fileAbsolutePath: { regex: "/src\/content\/projects/" } }
       ) {
         edges {
           node {

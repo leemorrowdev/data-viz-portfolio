@@ -43,7 +43,7 @@ const recentProjectsQuery = graphql`
   query recentProjects {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { fileAbsolutePath: { regex: "/projects/" } }
+      filter: { fileAbsolutePath: { regex: "/src\/content\/projects/" } }
       limit: 3
     ) {
       edges {

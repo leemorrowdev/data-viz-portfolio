@@ -22,8 +22,8 @@ const MdxLayout = ({
     },
   },
 }) => {
-  const postsMatch = /\/posts\//.test(fileAbsolutePath)
-  const projectsMatch = /\/projects\//.test(fileAbsolutePath)
+  const postsMatch = /src\/content\/posts/.test(fileAbsolutePath)
+  const projectsMatch = /src\/content\/projects/.test(fileAbsolutePath)
 
   const { state = {} } = location
   const { currentPage } = state
