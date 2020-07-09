@@ -2,7 +2,7 @@
  * Main header component
  */
 
-import { Link /*withPrefix*/ } from "gatsby"
+import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import { FaTwitter, FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa"
@@ -34,14 +34,6 @@ const Header = ({ siteTitle, siteSocial }) => (
         </a>
       ))}
     </div>
-
-    {/* <a
-      href={withPrefix('/resume.pdf')}
-      target="_blank"
-      rel="noreferrer noopener"
-    >
-      Resume
-    </a> */}
   </header>
 )
 
