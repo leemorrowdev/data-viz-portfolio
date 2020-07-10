@@ -27,8 +27,6 @@ const Header = ({ siteTitle, siteSocial }) => (
           className={styles.icon}
           key={platform.url}
           href={platform.url}
-          target="_blank"
-          rel="noreferrer noopener"
         >
           {icons[platform.name]}
         </a>
