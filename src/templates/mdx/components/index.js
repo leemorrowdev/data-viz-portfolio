@@ -7,11 +7,6 @@ import React from "react"
 import styles from "./mdx-components.module.scss"
 
 const MDXComponents = {
-  p: ({ children, ...props }) => (
-    <p {...props} className={styles.p}>
-      {children}
-    </p>
-  ),
   // https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element
   hr: ({ children, ...props }) => (
     <hr {...props} className={styles.hr}>

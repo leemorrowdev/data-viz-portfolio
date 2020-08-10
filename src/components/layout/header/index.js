@@ -23,11 +23,7 @@ const Header = ({ siteTitle, siteSocial }) => (
     </h1>
     <div>
       {siteSocial.map(platform => (
-        <a
-          className={styles.icon}
-          key={platform.url}
-          href={platform.url}
-        >
+        <a className={styles.icon} key={platform.url} href={platform.url}>
           {icons[platform.name]}
         </a>
       ))}

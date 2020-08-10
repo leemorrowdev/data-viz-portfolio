@@ -84,7 +84,7 @@ export const postsQuery = graphql`
   query postsQuery($skip: Int!, $limit: Int!) {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { fileAbsolutePath: { regex: "/src\/content\/posts/" } }
+      filter: { fileAbsolutePath: { regex: "/src/content/posts/" } }
       limit: $limit
       skip: $skip
     ) {

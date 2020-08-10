@@ -39,7 +39,7 @@ const recentPostsQuery = graphql`
   query recentPosts {
     allMdx(
       sort: { fields: frontmatter___date, order: DESC }
-      filter: { fileAbsolutePath: { regex: "/src\/content\/posts/" } }
+      filter: { fileAbsolutePath: { regex: "/src/content/posts/" } }
       limit: 2
     ) {
       edges {

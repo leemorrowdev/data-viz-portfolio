@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, withPrefix } from "gatsby"
+import { withPrefix } from "gatsby"
 
 import MainLayout from "../components/layout/main"
 import SEO from "../components/seo"
@@ -9,12 +9,20 @@ import RecentProjects from "../components/recent-projects"
 const IndexPage = () => (
   <MainLayout>
     <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
+    <h1>Hi, my name is Lee</h1>
     <p>
-      Check out my <a href={withPrefix("/resume.pdf")}>resume</a>.
+      I'm a front end developer interested in building interactive data
+      visualizations in React and D3. I love learning about economics, finance,
+      and statistics, and want to help facilitate better visual communication
+      and understanding.
+    </p>
+    <p>
+      Check out my blog posts and projects below for content on front end
+      development and interesting data visualizations.
+    </p>
+    <p>
+      Interested in working with me? Here's my{" "}
+      <a href={withPrefix("/resume.pdf")}>resume</a>.
     </p>
     <RecentPosts />
     <RecentProjects />
