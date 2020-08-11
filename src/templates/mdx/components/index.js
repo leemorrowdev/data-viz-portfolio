@@ -7,11 +7,10 @@ import React from "react"
 import styles from "./mdx-components.module.scss"
 
 const MDXComponents = {
-  // https://stackoverflow.com/questions/6382023/changing-the-color-of-an-hr-element
-  hr: ({ children, ...props }) => (
-    <hr {...props} className={styles.hr}>
+  h2: ({ children, ...props }) => (
+    <h2 {...props} className={styles.h2}>
       {children}
-    </hr>
+    </h2>
   ),
   // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/blockquote
   blockquote: ({ children, ...props }) => (
@@ -28,6 +27,16 @@ const MDXComponents = {
     <pre {...props} className={styles.pre}>
       {children}
     </pre>
+  ),
+  ol: ({ children, ...props }) => (
+    <ol {...props} className={styles.ol}>
+      {children}
+    </ol>
+  ),
+  ul: ({ children, ...props }) => (
+    <ul {...props} className={styles.ul}>
+      {children}
+    </ul>
   ),
   li: ({ children, ...props }) => (
     <li {...props} className={styles.li}>
