@@ -1,0 +1,119 @@
+---
+title: The JavaScript Environment Part Four - Browser Engines
+date: 2020-08-11
+---
+
+This is part four of a five part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. Check out the other parts of this series:
+
+1. <Link to='/posts/javascript-environment-part-one'>Overview</Link>
+2. <Link to='/posts/javascript-environment-part-two'>JavaScript engines</Link>
+3. <Link to='/posts/javascript-environment-part-three'>Closures</Link>
+4. Browser Engines
+5. <Link to='/posts/javascript-environment-part-five'>Asynchronous Operations</Link>
+
+## Browser Engines
+
+### The Event Loop
+
+Once the initial loading phase of a JavaScript application is complete, the application enters the event handling phase. In this phase, the main logic and rendering of a JavaScript application runs on a single main thread in the browser engine. This main thread is known as the *event loop*. 
+
+The event loop essentially connects the UI to the JavaScript engine. When a task is queued on one of the JavaScript engine's two task queues, the event loop will eventually collect the task from its queue. Once the previous task has completed, at which point the call stack will be empty, the event loop adds the task to the call stack to be executed. 
+
+Remember, tasks in the event loop:
+- are handled one at a time 
+- always run to completion and cannot be interrupted
+
+#### Loop Iteration
+
+In each loop iteration, the JavaScript engine will take the following actions:
+
+1. If the macrotask queue is not empty, process one task
+2. If the microtask queue is not empty, process all tasks in the queue
+3. If a UI update is required, re-render
+
+**Notes:**
+- Because the purpose of microtasks is to update the application state, all microtasks should be executed before the display is re-rendered. 
+- Microtasks can queue up other microtasks, all of which will continue to run with priority.
+- In order to take advantage of the microtask queue, you must use promises or async await when calling asynchronous functions. 
+
+#### UI Rendering
+
+The browser runs at a target frame rate of 60 frames per second; it should aim to re-render 60 times per second to achieve this goal. This means that, ideally, the browser re-renders every 16 ms. If we want to achieve this goal, it is important to avoid adding long running tasks to the event queue. 
+
+**Notes:**
+- If the event loop reaches the UI update check in under 16 ms, it may not re-render, as re-rendering is a complex and time consuming operation. 
+- If executing one iteration of the event loop takes more than 16ms, it may not achieve the target frame rate. In many cases this may not be noticeable to the user, but if a task runs for more than a couple seconds, the browser will display an "Unresponsive Script" message. 
+
+#### Timers
+
+Timers are extremely useful in JavaScript, but their purpose is often misunderstood; timers are not actually useful for measuring precise intervals, but are extremely useful for breaking up long running tasks that prevent the UI from re-rendering. 
+
+##### Measuring intervals
+
+Timers are not useful for measuring precise intervals because they offer no guarantee of when a their callback will be executed. Once a timer fires, it adds its callback to the macrotask queue. If there are a number of macrotasks and microtasks already in queue, however, its callback may not actually be executed until well after.
+
+##### Breaking up code
+
+Because only one task in the macrotask queue is executed per iteration of the event loop, dividing up a given macrotask into multiple macrotasks provides the UI with more opportunities to re-render.
+
+The most common way of accomplishing this is to call `setTimeout(callback, 0)` on a given callback function. 
+
+An iterative case study of a long running task:
+ ```
+const count = 20000;
+const subTasks = 4;
+const chunkSize = count / subTasks;
+let iteration = 0;
+setInterval(function runTask(){
+  const baseCount = chunkSize * iteration; // compute where to start
+  for(let i = 0; i < chunkSize; i++){
+  let currCount = baseCount + 1;
+  // do stuff
+  }
+  iteration++;
+  if(iteration < subTasks){
+    setTimeOut(runTask, 0);
+  }
+}, 0);
+ ```
+
+##### Timer APIs
+
+There are two timer APIs in the HTML 5 standards:
+
+1. `setTimeout();`
+   - `id = setTimeout(callback, delay);`
+   - `clearTimeout(id);`
+  
+2. `setInterval();`
+   - `id = setInterval(callback, delay);`
+   - `clearInterval(id);`
+
+**Notes:**
+- In the case of `setInterval()`, the JavaScript engine will not queue more than one instance of a specific interval handler at a time. As a result, if a previous callback from a given interval is still in the macrotask queue and has not been executed, a new one will not be added to the macrotask queue. 
+
+### Asynchronous Operations
+A full list of the Web APIs browsers provide, as well as documentation of their corresponding JavaScript function calls can be found on the [mozilla developer network](https://developer.mozilla.org/en-US/docs/Web/API). 
+
+### The Browser Object Model
+
+Browser engines also manage the Browser Object Model (BOM), which maintains the current state of the browser and all running applications. At its root, the BOM consists of an object known as the `window` object, which has the following children:
+- navigator
+- history
+- screen
+- location
+- document
+
+**Note:** Though the BOM is not standardized, all modern browsers support the `window` object by convention.
+
+#### Well Known Browser Web APIs
+- The DOM API
+- `XMLHttpRequest` and `fetch`
+- `setTimeout` and `setInterval`
+
+#### Popular Browsers and their Engines
+
+- Chromium / Google Chrome: previously WebKit, now Blink
+- Microsoft Edge: previously EdgeHTML, now Blink
+- Mozilla Firefox: Gecko
+- Safari: WebKit

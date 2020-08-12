@@ -3,10 +3,12 @@
  */
 
 import React from "react"
+import { Link } from "gatsby"
 
 import styles from "./mdx-components.module.scss"
 
 const MDXComponents = {
+  Link,
   h2: ({ children, ...props }) => (
     <h2 {...props} className={styles.h2}>
       {children}

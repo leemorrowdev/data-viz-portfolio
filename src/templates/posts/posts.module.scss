@@ -49,9 +49,10 @@
       display: flex;
       width: 100%;
       justify-content: space-evenly;
+      color: $color-primary-dark;
 
       .active {
-        color: $color-primary-dark;
+        color: $color-gray-dark;
         pointer-events: none;
         cursor: default;
       }
