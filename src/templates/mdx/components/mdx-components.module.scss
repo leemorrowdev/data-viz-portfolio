@@ -24,9 +24,12 @@
 
 .code {
   background-color: $color-primary-light;
+  padding: .4rem;
 }
 
 .pre {
+  overflow: auto;
+  white-space: pre-wrap;
   background-color: $color-primary-light;
   padding: 1rem;
 }

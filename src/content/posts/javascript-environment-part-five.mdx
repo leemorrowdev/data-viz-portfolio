@@ -201,9 +201,10 @@ function getJSONPromise(path) {
 }
 
 try {
-  getJSONPromise("./example.json").then(function(result){
-    const data = JSON.parse(result);
-  });
+  getJSONPromise("./example.json")
+    .then(function(result) {
+      const data = JSON.parse(result);
+    });
 } catch(error){
   // handle errors
 }
