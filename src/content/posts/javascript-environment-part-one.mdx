@@ -3,15 +3,19 @@ title: The JavaScript Environment Part One - Overview
 date: 2020-08-08
 ---
 
-This is part one of a five part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. Check out the other parts of this series:
+This is part one of a six part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. 
+Check out the other parts of this series:
 
 1. Overview
-2. <Link to='/posts/javascript-environment-part-two'>JavaScript engines</Link>
-3. <Link to='/posts/javascript-environment-part-three'>Closures</Link>
-4. <Link to='/posts/javascript-environment-part-four'>Browser engines</Link>
-5. <Link to='/posts/javascript-environment-part-five'>Asynchronous Operations</Link>
+2. <Link to='/posts/javascript-environment-part-two'>JavaScript Engines</Link>
+3. <Link to='/posts/javascript-environment-part-three'>Browser Engines</Link>
+4. <Link to='/posts/javascript-environment-part-four'>JavaScript Execution</Link>
+5. <Link to='/posts/javascript-environment-part-five'>Closures</Link>
+6. <Link to='/posts/javascript-environment-part-six'>Asynchronous Operations</Link>
 
-I started learning JavaScript last year. Starting from nothing, I often found myself frustrated, struggling to comprehend concepts that just didn't make sense on their own. One moment I would read that JavaScript is single threaded, the next I'd find myself learning about asynchronous code, callbacks, promises, and async and await.
+When I first started learning JavaScript from nothing last year, I often found myself frustrated, 
+struggling to comprehend concepts that just didn't make sense on their own. 
+One moment I would read that JavaScript is single threaded, the next I'd find myself learning about asynchronous code, callbacks, promises, and async and await.
 
 The more I studied, the more seemingly contradictory or just downright confusing concepts I discovered.
 
@@ -19,47 +23,64 @@ After all this frustration, I finally decided to learn how JavaScript works to g
 
 ## Engines
 
-JavaScript environments are made up of two main components:
+To understand JavaScript, you have to have a broad understanding of its environment. JavaScript environments are made up of two main components:
 - a JavaScript engine
-- a browser engine
+- a platform engine
 
 ### JavaScript Engines
 
-JavaScript engines manage the execution of JavaScript code on the application's main thread. All JavaScript engines implement the features required by the European Computer Manufacturers Association (ECMA) [ECMA-262 standards](https://www.ecma-international.org/publications/standards/Ecma-262.htm), or ECMAScript. These standards are written by the ECMA's Technical Committee 39, or TC39. TC39 produces new standards annually in July. 
+JavaScript engines manage the execution of JavaScript code on the application's main thread. 
+All JavaScript engines implement the features required by the European Computer Manufacturers Association (ECMA) [ECMA-262 standards](https://www.ecma-international.org/publications/standards/Ecma-262.htm), 
+or ECMAScript. These standards are written by the ECMA's Technical Committee 39, or TC39. TC39 produces new standards annually in July. 
 
-**Note:** A scripting language is a programming language designed to work with a specific run-time environment. In this case, ECMAScript is the standard used for web scripting languages, and JavaScript is merely the most popular implementation of that standard. 
+**Note:** A scripting language is a programming language designed to work with a specific run-time environment. 
+In this case, ECMAScript is the standard used for web scripting languages, and JavaScript is merely the most popular implementation of that standard. 
 
-### Browser Engines
+### Platform Engines
 
-Browser engines manage how JavaScript applications interact with the browser and provides applications with built in APIs. These APIs are known as Web APIs, and are standardized by the [HTML5 standards](https://html.spec.whatwg.org/). 
+Okay so just to prevent any confusion, as far as I'm aware I'm the only one using the term platform engine. Most of the time you'll see the term browser engine because most JavaScript environments are in browsers.
+But what about Node and React Native, both of which have their own engines? Thats where platform engine comes from. Its just a more general term.
 
-Web APIs are the only implementation details standardized on browser engines. All other implementation details are either similar purely by convention, or unique to the platform. 
+Anyways, platform engines manage how JavaScript applications interact with the device they are running on by providing applications with built in APIs to access device hardware or run libraries built into the environment itself.
 
-#### Other Platform Engines
+In browsers these APIs are known as Web APIs, and are standardized by the [HTML5 standards](https://html.spec.whatwg.org/). 
+Most other browser engine implementation details are not standardized, and are either similar purely by convention, or unique to the platform.
 
-JavaScript can run on a variety of platforms, for example NodeJS on servers or React Native on Android and iOS devices, but these notes are based specifically on browser engines because browsers are the most common and standardized platform.
+Non-browser platform engines do not follow the HTML standards. They often support some browser APIs like `fetch` and timers, but the exact APIs they implement is entirely dependent on the platform.
 
-Other platform engines like NodeJS and React Native do not follow the conventions of browser engines and do not implement the HTML 5 Standardization's Web APIs. In most cases they do implement common Web APIs, but there is no guarantee of any particular API being implemented. 
+## Operations
 
-## Operation Types
-
-The purpose behind these these two different engines is to support the two types of operations that all JavaScript environments must support:
+It turns out there is a good reason for JavaScript environments to contain two different engines. 
+It's because there are two types of operations that all JavaScript environments must support:
 - Synchronous operations
 - Asynchronous operations
 
 ### Synchronous Operations
 
-Synchronous operations are run by the JavaScript engine on the single main thread of an application, on which only one task runs at a time.
+Synchronous operations are run one at a time by the JavaScript engine on the single main thread of an application.
 
-JavaScript applications follow a single threaded execution model to prevent *race conditions*. 
+JavaScript environments follow this single threaded execution model to prevent *race conditions*. 
 - Race condition: when generating the correct output of an operation is dependent on the sequence of two or more other operations whose sequence cannot be guaranteed.
 
-**Examples:** main application logic and changes to the UI
+**Examples:** 
+- Main application logic
+- Changes to the UI
 
 ### Asynchronous Operations
 
-Asynchronous operations are not run by the JavaScript engine; they are run by the browser engine on a different thread from the JavaScript application. These operations are called by JavaScript functions, but their actual logic is built into web browsers. Because of this, they are known as Web APIs. 
+Asynchronous operations are not run by the JavaScript engine; they are run by the platform engine on an entirely different thread.
+These operations run by being called by JavaScript functions, even though their actual logic is built into the platform engine in its native language. 
+In the case of browser engines, these are the Web APIs I mentioned earlier, which are written in C++.
 
-Without asynchronous operations, long running tasks would have to run on the main thread in JavaScript. Because only one task can execute at a time on the main thread, this would block the UI from updating. 
+Without asynchronous operations, long running tasks normally handled by APIs would have to run on the main thread in the JavaScript engine. 
+But there is only one main thread that executes tasks one at a time, so this would constantly block the UI from re-rendering!
 
-**Examples:** timers and server operations
+**Examples:**
+- Timers
+- Server operations
+
+## Whats Next?
+
+In the next two parts of this series I will go into detail about the design of each engine. 
+Then, I'll discuss the two phases in JavaScript executed and some particularly challenging problems that arise from this.
+Finally, I'll explore two special topics that were particularly confusing to me before I learned about how JavaScript works: asynchronous code and closures.

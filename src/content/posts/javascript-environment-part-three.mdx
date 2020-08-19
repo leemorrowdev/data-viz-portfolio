@@ -1,67 +1,144 @@
 ---
-title: The JavaScript Environment Part Three - Closures
-date: 2020-08-10
+title: The JavaScript Environment Part Three - Browser Engines
+date: 2020-08-11
 ---
 
-This is part three of a five part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. Check out the other parts of this series:
+This is part three of a six part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. 
+Check out the other parts of this series:
 
 1. <Link to='/posts/javascript-environment-part-one'>Overview</Link>
-2. <Link to='/posts/javascript-environment-part-two'>JavaScript engines</Link>
-3. Closures
-4. <Link to='/posts/javascript-environment-part-four'>Browser engines</Link>
-5. <Link to='/posts/javascript-environment-part-five'>Asynchronous Operations</Link>
+2. <Link to='/posts/javascript-environment-part-two'>JavaScript Engines</Link>
+3. Browser Engines
+4. <Link to='/posts/javascript-environment-part-four'>JavaScript Execution</Link>
+5. <Link to='/posts/javascript-environment-part-five'>Closures</Link>
+6. <Link to='/posts/javascript-environment-part-six'>Asynchronous Operations</Link>
 
-## Closures
+## Browser Engines
 
-Every time a function is defined, it creates a new lexical environment. Every lexical environment keeps a reference to the environment it was created in. In other words, every time a function is invoked, it has access to all identifiers in scope at the time of its definition&mdash;even if invoked after the scope in which it was defined is no longer on the call stack. Together, these two facts result in what is known as a closure. 
+In this part I will go through the main components in Browser engines: 
+- The Event Loop
+- Web APIs
+- The Browser Object Model (BOM)
 
-### Using Closures with Callbacks
+Remember there can be other platform engines, but for the purpose of this series I will now focus on browser engines.
 
-Callback functions are called after some asynchronous operation has completed, in which case the execution context and lexical environment they were defined in will no longer be on the stack. 
+### The Event Loop
 
-Because the callback function creates a closure, its still possible to access variables defined outside its lexical environment. 
+Alright so time for a quick review. We know JavaScript environments are designed around a single-threaded execution model, meaning only one task can be executed at a time. 
+We also know that Web APIs provide support for asynchronous operations by maintaining the order that the callbacks arrive through the macrotask and microtask queues.
+But, you might notice I haven't described exactly when tasks are removed from the two task queues and added to the call stack! 
 
-```
-var tick = 0;
-var timer = setInterval(function(){
-  if(tick < 8){
-    console.log(tick);
+This is where the event loop comes in.
+
+When a task is queued on one of the task queues, it will eventually be added to the call stack and executed. 
+However, this should only happen when the task is next in queue and when the call stack is empty. 
+Throughout this process, the user interface (UI) must be re-rendered often enough to achieve a target frame rate of 60fps. 
+
+The event loop brings all these processes together.
+
+#### Loop Iteration
+
+In each loop iteration, the JavaScript engine will take the following actions:
+
+1. If the macrotask queue is not empty, process one task
+2. If the microtask queue is not empty, process all tasks in the queue
+3. If a UI update is necessary to achieve the 60fps target frame rate, re-render
+
+**Notes:**
+- Because the purpose of microtasks is to update the application state, all microtasks should be executed before the display is re-rendered. 
+- Microtasks can queue up other microtasks, all of which will continue to run with priority.
+- In order to take advantage of the microtask queue, you must use promises or async await when calling asynchronous functions. 
+- Tasks always run to completion.
+
+#### UI Rendering
+
+As I mentioned earlier, the browser runs at a target frame rate of 60 frames per second. In other words, it aims to re-render 60 times per second.
+This means that, ideally, the browser re-renders every 16 ms. If we want the browser to have any chance of achieving this goal, 
+we should avoid adding long running tasks to the event queue. 
+
+**Notes:**
+- If the event loop reaches the UI update check in under 16 ms, it may not re-render, as re-rendering is a complex and time consuming operation. 
+- If executing one iteration of the event loop takes more than 16ms, it may not achieve the target frame rate. 
+In many cases this may not be noticeable to the user, but if a task runs for more than a couple seconds, the browser will display an "Unresponsive Script" message. 
+
+#### Timers
+
+Timers are extremely useful in JavaScript, but their purpose is often misunderstood. 
+Because their usage is closely tied to how the event loop works, I'm going to discuss it a little here. 
+
+##### Measuring intervals
+
+Timers are not actually useful for measuring precise intervals because they offer no guarantee of when their callback will be executed, 
+only when it will be added to the queue.
+
+##### Breaking up code
+
+While they may not be the best for precision, they are very useful for breaking up long running tasks that prevent the UI from re-rendering. 
+Because only one task in the macrotask queue is executed per iteration of the event loop, 
+dividing up a given macrotask into multiple macrotasks provides the UI with more opportunities to re-render.
+
+The most common way of accomplishing this is to call `setTimeout(callback, 0)` on a given callback function. 
+
+An iterative example of breaking up a long running task using timers:
+
+ ```
+const count = 20000;
+const subTasks = 4;
+const chunkSize = count / subTasks;
+let iteration = 0;
+setInterval(function runTask(){
+  const baseCount = chunkSize * iteration; // compute where to start
+  for(let i = 0; i < chunkSize; i++){
+  let currCount = baseCount + 1;
+  // do stuff
   }
-  tick++;
-}, 1000)
-```
-
-In this example, `tick` is still in scope despite the callback function being the only function on the call stack. 
-
-### Using Closures to Create Private Variables
-
-Every time a constructor is invoked using the `new` keyword, a new lexical environment is assigned to it to track variables local to the constructor. Because of this, we can declare variables inside the constructor that are only accessible in the scope of the constructor, thus acting as private variables. 
-
-Functions defined as methods have access to the scope in which they were defined, which creates a closure around those private variables. As a result, methods can mutate the private variables associated with a particular object. 
-
-These variables cannot be accessed directly, as they are not connected to the context of newly initiated objects; they can only be accessed through the closure. 
-
-```
-function Counter(){
-  var count = 0;
-  this.getCount = function(){
-    return count;
+  iteration++;
+  if(iteration < subTasks){
+    setTimeOut(runTask, 0);
   }
-  this.increment = function(){
-    count++;
-  }
-}
-```
+}, 0);
+ ```
 
-In this example, the `Counter()` constructor has a private variable `count` only available in its scope. This variable cannot be accessed directly; it must be accessed through the two methods provided in the constructor. 
+##### Timer APIs
 
-Note though, that because these private variables rely on closures, its possible access them through other objects. 
+- `setTimeout();`
+   - `id = setTimeout(callback, delay);`
+   - `clearTimeout(id);`
+  
+- `setInterval();`
+   - `id = setInterval(callback, delay);`
+   - `clearInterval(id);`
 
-```
-var counterA = new Counter();
-var counterB = {};
-counterB.getCount = counterA.getCount;
-console.log(counterB.getCount()) // logs the count of counterA
-```
+**Note:** In the case of `setInterval()`, the JavaScript engine will not queue more than one instance of a specific interval handler at a time. 
+As a result, if a previous callback from a given interval is still in the macrotask queue and has not been executed, a new one will not be added to the macrotask queue. 
 
-In this example, `counterB` has access to the count of `counterA` because it is given a reference to the `getCount()` method, which has access to the `count` variable through the closure. 
+### Web APIs
+
+Remember those Web APIs I mentioned in the first part of this series that are standardized by the HTML specification? Thats where timers come from!
+
+A full list as well as documentation of their corresponding JavaScript function calls can be found on the 
+[mozilla developer network](https://developer.mozilla.org/en-US/docs/Web/API).
+
+Some other common Web APIs:
+
+- The Document Object Model (DOM) API
+- The CSS Object Model (CSSOM) API
+- The Fetch API
+
+### The Browser Object Model
+
+Browser engines also manage the Browser Object Model (BOM), which maintains the current state of the browser and all running applications. At its root, the BOM consists of an object known as the `window` object, which has the following children:
+- navigator
+- history
+- screen
+- location
+- document
+
+**Note:** Though the BOM is not standardized, all modern browsers support the `window` object by convention.
+
+## Popular Browsers and their Engines
+
+- Chromium / Google Chrome: previously WebKit, now Blink
+- Microsoft Edge: previously EdgeHTML, now Blink
+- Mozilla Firefox: Gecko
+- Safari: WebKit

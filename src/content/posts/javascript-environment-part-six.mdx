@@ -1,0 +1,272 @@
+---
+title: The JavaScript Environment Part Six - Asynchronous Operations
+date: 2020-08-12
+---
+
+This is part six of a six part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. 
+Check out the other parts of this series:
+
+1. <Link to='/posts/javascript-environment-part-one'>Overview</Link>
+2. <Link to='/posts/javascript-environment-part-two'>JavaScript Engines</Link>
+3. <Link to='/posts/javascript-environment-part-three'>Browser Engines</Link>
+4. <Link to='/posts/javascript-environment-part-four'>JavaScript Execution</Link>
+5. <Link to='/posts/javascript-environment-part-five'>Closures</Link>
+6. Asynchronous Operations
+
+## Asynchronous Operations
+
+For this final part I'll be discussing another special topic: asynchronous operations. 
+I'll explain what they really are in the context of everything I've covered so far in this series,
+and then I'll show their two most common use cases.
+
+Time for one last review. Here are the important concepts to remember: 
+- JavaScript applications use a single threaded execution model, so any long running operation on the call stack will block the UI from updating. 
+- Thankfully, most long running operations don't run on the call stack; they run asynchronously through Web APIs built into the browser.
+- Web APIs can be accessed by calling asynchronous JavaScript functions which are immediately removed from the call stack.
+
+Alright now here's where asynchronous operations come into the picture. 
+Web APIs do not run on the call stack, so there's no way for us to know when they have completed their asynchronous task unless they provide us with one.
+This is the origin of callbacks, promises, and async / await. 
+They are each a way for us developers to write code that will run when some Web API completes its asynchronous task.
+
+### Callback Functions
+
+Most Web APIs written before ES2015 handle asynchronous operations through callback functions.
+A callback function is just a functions passed into another function as an argument that will be *called back* at a later point in time. 
+
+The following examples use JQuery's `getJSON()` function, which is actually just a wrapper around a Web API:
+
+```
+$.getJSON("./example.json", function(){
+  // handle results 
+});
+```
+Unfortunately the callback method has many problems, namely the following:
+
+#### Error handling
+
+```
+try {
+  $.getJSON("./example.json", function(result){
+    const data = JSON.parse(result);
+  });
+} catch(error){
+  // handle errors
+}
+```
+In this block, the callback function is called on an entirely different iteration of the event loop and is the only function on the call stack. 
+If an error is thrown within it, for example from the `JSON.parse()` call, the catch block will not be called and the error will be lost!
+
+#### The Pyramid of Doom
+
+```
+$.getJSON("./example1.json", function(){
+  $.getJSON("./example2.json", function(){
+    $.getJSON("./example3.json", function(){
+      // handle results 
+    });
+  });
+});
+```
+Calling asynchronous functions in the callback of other asynchronous function can also result in some *very* difficult code. 
+
+#### Running Asynchronous Functions in Parallel
+
+```
+$.getJSON("./example1.json", function(){
+  // handle results 
+});
+$.getJSON("./example2.json", function(){
+  // handle results 
+});
+$.getJSON("./example3.json", function(){
+  // handle results 
+});
+```
+In this case, there is no way to know when all the Web APIs have completed their task. 
+If there is some operation that should be completed after all tasks have successfully completed, 
+the only way to know when it should run would be to check if every asynchronous function has returned in every callback. This could get *very* tedious!
+
+### Promises
+
+Web APIs written after ES2015 handle asynchronous operations by returning a promise. 
+
+A promise is a placeholder object for a value that doesn't exist, but might in the future. 
+If the promise is kept, its result will be a value. Otherwise, its result will be an error. 
+
+#### Creating promises
+
+To really understand promises, its important to look at them from the perspective of a developer writing an API that utilizes Web APIs.
+You can probably imagine how you might write such an API based on callbacks; just take a function as a parameter and execute it once the Web API completes its task.
+A promise-based API is a little more complicated. It has to return a promise object, so it's time to go over how promises are created in the first place.
+
+The promise constructor takes a single function called the executor function as a parameter. 
+The executor function takes two functions called resolve and reject as parameters, and calls these functions to change the state of the promise.
+
+Promises have three states:
+- pending, or unresolved state: The value is completely unknown. 
+- fulfilled state: The promise's `resolve()` function has been called and the promised value has been returned. 
+- rejected state: 
+  - The promise's `reject()` function has been called
+  - an unhandled exception occurred
+
+A simple promise that does nothing but resolve immediately and has no rejection cases:
+
+```
+const promise = new Promise((resolve, reject) => {
+  resolve("result");
+  // reject("error");
+});
+
+```
+
+#### Using promises
+
+Promises are used by calling their built in `then()` method. This method takes two functions: 
+one for if the promise is fulfilled, and another for if it's rejected.
+
+The promise is fulfilled if its `resolve()` function is called in the executor function.
+
+The promise can be rejected in two ways: 
+
+- Explicitly: if its `reject()` function is called in the executor function
+- Implicitly: if an unhandled exception occurs, for example an undeclared variable 
+
+In either of these circumstances, the reject callback of the `then()` function will be called. 
+
+```
+promise.then(result => {
+  console.log(result);
+}, error => {
+  console.log(error);
+});
+```
+
+The function passed to the `then()` method is added to the microtask queue, so it is run after all code in the current step of the event loop has completed.
+
+#### Converting older Web APIs into promise based APIs
+
+The setTimeout Web API uses callbacks to handle its asynchronous operation. Fortunately, we can wrap it in a promise to make it easier to work with:
+
+```
+function setTimeoutPromise(time) {
+  return new Promise((resolve, reject) => {
+    id = setTimeout(() => {
+      resolve(id);
+    }, time);
+  });
+}
+
+setTimeoutPromise(1000).then(id => {
+  console.log(id);
+});
+```
+
+#### Chaining promises
+
+One particularly useful feature of promises is the `then()` method always returns a new promise! 
+Even if the value in its resolve function is not a promise, that value is automatically wrapped in one.
+This actually ends up being extremely useful. 
+Whenever a future promise depends on the success of a previous promise, just chain the promises together to run one after another.
+
+```
+getJSON(data/resultA.json)
+  .then(resultA => getJSON(data/resultB.json))
+  .then(resultB => console.log("completed chain"))
+  .catch(error => console.log(error));
+```
+
+You can even catch all errors at once by using a catch statement at the end of the chain. If there's an error at any point, it will be invoked.
+You can also use a catch statement for single promises, but this is entirely up to personal preference. 
+
+#### Waiting for a number of promises
+
+If the order the promises are completed in doesn't matter, just use the `Promise.all()` method. 
+This method takes an array of function callbacks, and returns a new promise that fulfills or rejects only if all promises are fulfilled.
+Its `then()` function receives an array of all the results.
+
+If only the first promise to be completed matters, call the `Promise.race()` method. 
+It operates in the same way as `Promise.all()`, except it returns a new promise that fulfills or rejects based only on the first promise to fulfill or reject. 
+Its `then()` function of course returns only the first result.
+
+### Async/Await
+
+Promises are much better than callback functions, but they still have issues. 
+The ES2017 `async` and `await` keywords solve many of these issues by making it possible to write asynchronous code in a synchronous way!
+
+Internally, `async` and `await` basically combine promises with ES2015 generator functions, 
+a special type of function that makes it possible to pause a function's execution without blocking the call stack.
+
+The `async` keyword defines the function as an asynchronous function, 
+and the `await` keyword followed by an asynchronous operation that returns a promise
+creates an expression that pauses the function's execution until the promise is resolved.
+
+```
+function setTimeoutPromise(time) {
+  return new Promise((resolve, reject) => {
+    id = setTimeout(() => {
+      resolve(id);
+    }, time);
+  });
+}
+
+async function doubleTimeout(time) { 
+  firstId = await setTimeoutPromise(time);
+  secondId = await setTimeoutPromise(time);
+  return [firstId, secondId];
+};
+```
+
+#### Error handling
+
+Promises don't just result in slightly messier code, they actually have the same error handling problems that callback functions have!
+Once again, the function in the `then()` method is called on an entirely different iteration of the event loop at which point it is the only function on the call stack. 
+If an error is thrown within it, the catch block will not be called and the error will be lost. 
+
+```
+function getJSONPromise(path) {
+  return new Promise((resolve, reject) => {
+    $.getJSON(() => {
+      resolve(path);
+    });
+  });
+}
+
+try {
+  getJSONPromise("./example.json")
+    .then(function(result) {
+      const data = JSON.parse(result);
+    });
+} catch(error){
+  // handle errors
+}
+```
+
+With `async` and `await` the catch statement will finally catch the error!
+
+```
+async function getJSONAsync() {
+  try {
+    const data = JSON.parse(await $.getJSON());
+  }
+  catch(error) {
+    console.log(error);
+  }
+}
+```
+
+#### Error Reporting
+
+Error handling isn't the only issue solved by `async` and `await`. 
+
+Promises report all errors, even those within the `then()` method, as originating within the promise itself. 
+This makes it very difficult to track down where an error originates from because a function 
+that returns a new promise could be called throughout the code base and handle errors differently each time. 
+
+In async functions, errors are reported as coming from the function where they originate!
+
+#### Syntax
+
+Async functions improve syntax significantly over promises:
+- conditionally chained promises do not require nested `then()` calls like promise chains do
+- synchronously called async operations do not need complicated `then()` calls like promise chains do

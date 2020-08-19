@@ -1,119 +1,185 @@
 ---
-title: The JavaScript Environment Part Four - Browser Engines
+title: The JavaScript Environment Part Four - JavaScript Execution
 date: 2020-08-11
 ---
 
-This is part four of a five part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. Check out the other parts of this series:
+This is part four of a six part series I've written to assist in my learning, and also to help anyone else out there facing similar struggles. 
+Check out the other parts of this series:
 
 1. <Link to='/posts/javascript-environment-part-one'>Overview</Link>
-2. <Link to='/posts/javascript-environment-part-two'>JavaScript engines</Link>
-3. <Link to='/posts/javascript-environment-part-three'>Closures</Link>
-4. Browser Engines
-5. <Link to='/posts/javascript-environment-part-five'>Asynchronous Operations</Link>
+2. <Link to='/posts/javascript-environment-part-two'>JavaScript Engines</Link>
+3. <Link to='/posts/javascript-environment-part-three'>Browser Engines</Link>
+4. JavaScript Execution
+5. <Link to='/posts/javascript-environment-part-five'>Closures</Link>
+6. <Link to='/posts/javascript-environment-part-six'>Asynchronous Operations</Link>
 
-## Browser Engines
+## JavaScript Execution
 
-### The Event Loop
+In this part I'll explain the two phases of JavaScript execution:
+1. The Identifier Resolution Phase
+2. The Execution Phase
 
-Once the initial loading phase of a JavaScript application is complete, the application enters the event handling phase. In this phase, the main logic and rendering of a JavaScript application runs on a single main thread in the browser engine. This main thread is known as the *event loop*. 
+I'll also discuss some important concepts related to this model.
 
-The event loop essentially connects the UI to the JavaScript engine. When a task is queued on one of the JavaScript engine's two task queues, the event loop will eventually collect the task from its queue. Once the previous task has completed, at which point the call stack will be empty, the event loop adds the task to the call stack to be executed. 
+### Execution Phases
 
-Remember, tasks in the event loop:
-- are handled one at a time 
-- always run to completion and cannot be interrupted
+#### The Identifier Resolution Phase
 
-#### Loop Iteration
+Remember, identifier resolution is the process of mapping (registering) identifiers (variable or function names) to variables (memory locations). 
+In JavaScript, this process occurs every time a new lexical environment is created. 
 
-In each loop iteration, the JavaScript engine will take the following actions:
+Here's an outline of the identifier resolution phase for a single lexical environment:
 
-1. If the macrotask queue is not empty, process one task
-2. If the microtask queue is not empty, process all tasks in the queue
-3. If a UI update is required, re-render
+1. Create the Lexical Environment
+2. If the environment is a function or global environment:
+   - Scan the environment for function declarations:
+     - Register the identifiers of function declarations that are outside other functions, and define their corresponding functions
+     - If an identifier already exists in the outer environment, overwrite it
+3. Scan the environment for variable declarations:
+   - If the environment is a block environment:
+     - Register identifiers of variables declared with `let` and `const` in the current block, but do not initialize them
+       - If an identifier already exists in the outer environment, overwrite it
+   - If the environment is a function or global environment:
+     - Register the identifiers of variables declared with `var` outside other functions, and initialize them as `undefined`
+       - If an identifier already exists in the current environment, overwrite it
+     - Register the identifiers of variables declared with `let` and `const` outside blocks, but do not initialize them
+       - If an identifier already exists in the current environment, throw a `SyntaxError`, as variables declared with `let` and `const` cannot be re-declared
 
-**Notes:**
-- Because the purpose of microtasks is to update the application state, all microtasks should be executed before the display is re-rendered. 
-- Microtasks can queue up other microtasks, all of which will continue to run with priority.
-- In order to take advantage of the microtask queue, you must use promises or async await when calling asynchronous functions. 
+##### Variable Declarations
 
-#### UI Rendering
+If you follow the outline above, you'll see why `const` `let` and `var` work the way they do!
 
-The browser runs at a target frame rate of 60 frames per second; it should aim to re-render 60 times per second to achieve this goal. This means that, ideally, the browser re-renders every 16 ms. If we want to achieve this goal, it is important to avoid adding long running tasks to the event queue. 
+- `const`: 
+  - cannot be re-declared
+  - cannot be reassigned
+  - can be modified
+  - must be initialized on definition
+  - block, loop, function, or global scope
+- `let`: 
+  - cannot be re-declared
+  - can be reassigned
+  - can be modified
+  - block, loop, function, or global scope
+- `var`: 
+  - can be re-declared
+  - can be reassigned
+  - can be modified
+  - function or global scope
 
-**Notes:**
-- If the event loop reaches the UI update check in under 16 ms, it may not re-render, as re-rendering is a complex and time consuming operation. 
-- If executing one iteration of the event loop takes more than 16ms, it may not achieve the target frame rate. In many cases this may not be noticeable to the user, but if a task runs for more than a couple seconds, the browser will display an "Unresponsive Script" message. 
+##### A Note on "Undeclared Variables"
 
-#### Timers
+From time to time I became confused when I found references to "Undeclared Variables" on Stack Overflow. 
+People call them undeclared because it looks like they were never registered with any variable declaration:
 
-Timers are extremely useful in JavaScript, but their purpose is often misunderstood; timers are not actually useful for measuring precise intervals, but are extremely useful for breaking up long running tasks that prevent the UI from re-rendering. 
+`foo = null`
 
-##### Measuring intervals
+But thats actually not whats happening at all! These variables are being created as properties of the global object, which is defined by the global Environmental Record.
 
-Timers are not useful for measuring precise intervals because they offer no guarantee of when a their callback will be executed. Once a timer fires, it adds its callback to the macrotask queue. If there are a number of macrotasks and microtasks already in queue, however, its callback may not actually be executed until well after.
+#### The Execution Phase
 
-##### Breaking up code
+Once the identifier resolution phase is complete, the execution phase begins and JavaScript code is executed line by line.
 
-Because only one task in the macrotask queue is executed per iteration of the event loop, dividing up a given macrotask into multiple macrotasks provides the UI with more opportunities to re-render.
+### Important Concepts
 
-The most common way of accomplishing this is to call `setTimeout(callback, 0)` on a given callback function. 
+##### Hoisting
 
-An iterative case study of a long running task:
- ```
-const count = 20000;
-const subTasks = 4;
-const chunkSize = count / subTasks;
-let iteration = 0;
-setInterval(function runTask(){
-  const baseCount = chunkSize * iteration; // compute where to start
-  for(let i = 0; i < chunkSize; i++){
-  let currCount = baseCount + 1;
-  // do stuff
-  }
-  iteration++;
-  if(iteration < subTasks){
-    setTimeOut(runTask, 0);
-  }
-}, 0);
- ```
+So the identified resolution phase registers variables and function declarations before the execution phase. Whats the big deal? 
+Actually, this simple concept causes some very unexpected results. 
 
-##### Timer APIs
+Any time you've heard someone mentioned *hoisting*, 
+this is what they're talking about! People say this because in JavaScript, variables declared with `var` and function declarations can be accessed before their declarations. 
+It's as if they are being *hoisted* to the top of the environment. And to add to the confusion, variables declared with `let` or `const` cannot be accessed. 
+Trying to do so results in a `Reference Error`! This is why you sometimes see people saying that variables declared with `let` and `const` are not hoisted.
 
-There are two timer APIs in the HTML 5 standards:
+So what causes these two different behaviors?
 
-1. `setTimeout();`
-   - `id = setTimeout(callback, delay);`
-   - `clearTimeout(id);`
-  
-2. `setInterval();`
-   - `id = setInterval(callback, delay);`
-   - `clearInterval(id);`
+Well, variables delcared with `var` are initialized as `undefined` on their registration and function declarations are defined on registration.
 
-**Notes:**
-- In the case of `setInterval()`, the JavaScript engine will not queue more than one instance of a specific interval handler at a time. As a result, if a previous callback from a given interval is still in the macrotask queue and has not been executed, a new one will not be added to the macrotask queue. 
+```
+console.log(foo); // logs the function
+console.log(bar); // logs undefined
 
-### Asynchronous Operations
-A full list of the Web APIs browsers provide, as well as documentation of their corresponding JavaScript function calls can be found on the [mozilla developer network](https://developer.mozilla.org/en-US/docs/Web/API). 
+function foo() {};
+var bar = null;
+```
 
-### The Browser Object Model
+In this example, both `foo` and `bar` can be accessed before their declaration. 
 
-Browser engines also manage the Browser Object Model (BOM), which maintains the current state of the browser and all running applications. At its root, the BOM consists of an object known as the `window` object, which has the following children:
-- navigator
-- history
-- screen
-- location
-- document
+Unlike variables declared with `var`, variables declared with `let` and `const` are never initialized as `undefined` on registration; 
+they are left uninitialized until the execution phase. When accessed early, they throw a `Reference Error`.
 
-**Note:** Though the BOM is not standardized, all modern browsers support the `window` object by convention.
+```
+console.log(foo); // throws a reference error
+console.log(bar); // throws a reference error
 
-#### Well Known Browser Web APIs
-- The DOM API
-- `XMLHttpRequest` and `fetch`
-- `setTimeout` and `setInterval`
+const foo = null;
+let bar = null;
+```
 
-#### Popular Browsers and their Engines
+Why the sudden inconsistency??
 
-- Chromium / Google Chrome: previously WebKit, now Blink
-- Microsoft Edge: previously EdgeHTML, now Blink
-- Mozilla Firefox: Gecko
-- Safari: WebKit
+ECMAScript standards explicitly state [let and const](https://www.ecma-international.org/ecma-262/#sec-let-and-const-declarations) 
+"may not be accessed in any way until the variable's LexicalBinding is evaluated."
+
+This restriction results in a zone between the declaration of variables declared with `let` or `const`
+ and the top of the environment which is known as the *Temporal Dead Zone* (TDZ). 
+
+The TDZ exists to ensure variables declared with `const` cannot be mutated as variables declared with `var` can, 
+because this would violate their entire purpose. Variables declared with `let` only have the TDZ for consistency, since both are block scoped.
+
+Feel free to go back and reference the outline of the identifier resolution phase from earlier, or just test any of this in a console if you don't believe me.
+
+##### Overriding Function Declarations
+
+Alright so this is another really strange one. You're probably going to need the outline to follow along.
+
+Variables declared with `var` are only initialized as `undefined` in step three of the identifier resolution process if they have not been encountered in the environment. 
+If a variable is declared with `var` but has the same identifier as a function declaration, 
+the variable will already have been encountered because function declarations are registered before variables in step two of the identifier resolution process. 
+As a result, the variable will not be initialized as undefined; instead, it will retain its value, the function, until the variable is re-initialized. 
+
+```
+console.log(foo); // logs the function
+var foo = null;
+function foo(){}
+console.log(foo); // logs null
+```
+
+In this example, the identifier `foo` is registered and assigned a reference to a function declaration in step two of the identifier resolution process. 
+In step three, it is not set to undefined because the identifier `foo` already exists in the environment; 
+instead, it is left with the function `foo` assigned as its reference until it is re-initialized by the var declaration. 
+This reassignment causes the function declaration's reference to be lost, and thus overridden. 
+
+This same behavior can be accomplished by simply re-initializing `foo`:
+
+```
+console.log(foo); // logs the function
+foo = null;
+function foo(){}
+console.log(foo); // logs null
+```
+
+But not by re-declaring `foo`: 
+
+```
+console.log(foo); // logs the function
+var foo;
+function foo(){}
+console.log(foo); // logs the function
+```
+
+Because the identifier `foo` is never re-initialized, it retains its reference to the function declaration and is not overridden. 
+
+Function declarations can only be overridden with `var` or by simply re-initializing the identifier. 
+Using `let` or `const` will result in a `SyntaxError` because `let` and `const` cannot be re-declared from any other variable. 
+
+No wonder some people hate JavaScript. 
+But hey, not to worry, now you'll never be confused about this again because I'm sure you've memorized the outline of the identifier resolution phase by now.
+
+##### Is JavaScript Compiled or Interpreted?
+
+JavaScript is an interpreted language. ...Or at very least its definitely not a compiled language in the traditional sense.
+
+Many interpreters use hybrid optimization techniques like Just In Time (JIT) Compilation.
+But this does not change the simple fact that JavaScript engines must have two distinct consecutive execution phases, 
+preventing JavaScript code from being compiled into a single binary file.
