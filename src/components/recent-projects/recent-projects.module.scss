@@ -21,6 +21,8 @@
       margin: 1rem;
       a {
         color: $color-gray-dark;
+        font-weight: 400;
+        
         &:hover {
           h4 {
             color: $color-primary-dark;

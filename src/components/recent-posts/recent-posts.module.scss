@@ -18,6 +18,8 @@
 
       a {
         color: $color-gray-dark;
+        font-weight: 400;
+        
         &:hover {
           h3 {
             color: $color-primary-dark;
