@@ -51,7 +51,7 @@ const AllProjects = ({ data, pageContext }) => {
           </ul>
         </div>
         <div className={styles.pagination}>
-          <span className={styles.text}>
+          <span className={styles.arrow}>
             {!(currentPage === 1) && (
               <Link
                 to={`/projects/${currentPage - 1 === 1 ? "" : currentPage - 1}`}
@@ -60,13 +60,13 @@ const AllProjects = ({ data, pageContext }) => {
               </Link>
             )}
           </span>
-          <span className={styles.numbers}>
+          <span>
             {Array.from({ length: numPages }, (_, i) => {
               const pageNumber = i + 1
               return (
                 <span
                   key={pageNumber}
-                  className={pageNumber === currentPage ? styles.active : ""}
+                  className={`${styles.number} ${pageNumber === currentPage && styles.current}`}
                 >
                   {pageNumber === 1 ? (
                     <Link to={`/projects/`}>1</Link>
@@ -77,7 +77,7 @@ const AllProjects = ({ data, pageContext }) => {
               )
             })}
           </span>
-          <span className={styles.text}>
+          <span className={styles.arrow}>
             {currentPage !== numPages && (
               <Link to={`/projects/${currentPage + 1}`} rel="next">
                 &rarr;

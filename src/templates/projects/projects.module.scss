@@ -45,23 +45,14 @@
 
   .pagination {
     display: flex;
-    justify-content: space-between;
-    text-align: center;
+    justify-content: center;
 
-    padding: 4rem 20rem 0rem 20rem;
-    @include respond(phone) {
-      padding: 4rem 6rem 0rem 6rem;
-    }
+    .number {
+      color: $color-primary-dark;
+      margin: 2rem;
 
-    .numbers {
-      display: flex;
-      width: 100%;
-      justify-content: space-evenly;
-
-      .active {
-        color: $color-primary-dark;
-        pointer-events: none;
-        cursor: default;
+      @include respond(phone) {
+        margin: 1rem;
       }
 
       a {
@@ -69,8 +60,19 @@
       }
     }
 
-    .text {
-      width: 8rem;
+    .current {
+      color: $color-gray-dark;
+      pointer-events: none;
+      cursor: default;
+    }
+
+    .arrow {
+      text-align: center;
+      width: 4rem;
+
+      @include respond(phone) {
+        width: 2rem;
+      }
     }
   }
 }
