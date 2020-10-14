@@ -18,9 +18,9 @@ const icons = {
 
 const Header = ({ siteTitle, siteSocial }) => (
   <header className={styles.container}>
-    <h1>
+    <div className={styles.text}>
       <Link to="/">{siteTitle}</Link>
-    </h1>
+    </div>
     <div>
       {siteSocial.map(platform => (
         <a className={styles.icon} key={platform.url} href={platform.url}>
