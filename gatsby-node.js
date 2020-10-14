@@ -9,6 +9,7 @@
 // https://www.gatsbyjs.org/docs/adding-pagination/
 
 const path = require(`path`)
+const fs = require('fs')
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {
@@ -30,11 +31,14 @@ exports.onCreateNode = ({ node, actions, getNode }) => {
       const ext = path.extname(absolutePath)
       // Swap extensions
       const featuredImage = absolutePath.replace(ext, ".png")
-      createNodeField({
-        name: `featuredImage`,
-        node,
-        value: featuredImage,
-      })
+      // Only create node field if a featured image exists
+      if (fs.existsSync(featuredImage)) {
+        createNodeField({
+          name: `featuredImage`,
+          node,
+          value: featuredImage,
+        })
+      }
     }
 
     createNodeField({
