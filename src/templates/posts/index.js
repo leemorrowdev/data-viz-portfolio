@@ -25,7 +25,7 @@ const AllPosts = ({ data, pageContext }) => {
             <Link to="/">&larr; Home</Link>
           </div>
           <h1>All Posts</h1>
-          <SEO title="All Posts" />
+          <SEO title={`All Posts - ${currentPage}`} />
           <ul>
             {edges.map(({ node: post }) => (
               <li key={post.id}>
