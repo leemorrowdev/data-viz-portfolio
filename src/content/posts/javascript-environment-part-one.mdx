@@ -1,5 +1,6 @@
 ---
 title: The JavaScript Environment Part One - Overview
+description: "When I first started learning JavaScript I often found myself frustrated, struggling to comprehend concepts that just didn't make sense on their own."
 date: 2020-08-08
 ---
 
@@ -13,17 +14,20 @@ Check out the other parts of this series:
 5. <Link to='/posts/javascript-environment-part-five'>Closures</Link>
 6. <Link to='/posts/javascript-environment-part-six'>Asynchronous Operations</Link>
 
-When I first started learning JavaScript from nothing last year, I often found myself frustrated, 
+When I first started learning JavaScript I often found myself frustrated, 
 struggling to comprehend concepts that just didn't make sense on their own. 
 One moment I would read that JavaScript is single threaded, the next I'd find myself learning about asynchronous code, callbacks, promises, and async and await.
 
 The more I studied, the more seemingly contradictory or just downright confusing concepts I discovered.
 
-After all this frustration, I finally decided to learn how JavaScript works to get to the bottom of it.
+After all this frustration, I finally decided to learn how JavaScript works to get to the bottom of it. 
+
+Understanding the environment JavaScript code is executed in is absolutely critical to understanding how the language itself works, hence the title of this series.
+In this first part I will give a broad overview of the parts of a JavaScript environment, which will function as an outline of sorts for future parts in the series.
 
 ## Engines
 
-To understand JavaScript, you have to have a broad understanding of its environment. JavaScript environments are made up of two main components:
+JavaScript environments are made up of two main engines:
 - a JavaScript engine
 - a platform engine
 

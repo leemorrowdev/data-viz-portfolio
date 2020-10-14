@@ -18,7 +18,7 @@ const MdxLayout = ({
     mdx: {
       body,
       fileAbsolutePath,
-      frontmatter: { title, date },
+      frontmatter: { title, description, date },
     },
   },
 }) => {
@@ -53,7 +53,7 @@ const MdxLayout = ({
         </div>
         <h1>{title}</h1>
         <div className={styles.date}>{date}</div>
-        <SEO title={title} />
+        <SEO title={title} description={description} />
         <MDXProvider components={MDXComponents}>
           <MDXRenderer>{body}</MDXRenderer>
         </MDXProvider>
@@ -70,6 +70,7 @@ export const ContentQuery = graphql`
       fileAbsolutePath
       frontmatter {
         title
+        description
         date(formatString: "MMMM DD, YYYY")
       }
     }

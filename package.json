@@ -1,7 +1,7 @@
 {
   "name": "data-viz-portfolio",
   "private": true,
-  "description": "Data Viz Portfolio",
+  "description": "Data Visualization Portfolio",
   "version": "0.1.0",
   "author": "Lee Morrow",
   "dependencies": {
