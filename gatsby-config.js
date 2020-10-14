@@ -27,6 +27,12 @@ module.exports = {
   mapping: { "Mdx.fields.featuredImage": `File.absolutePath` },
   plugins: [
     {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://www.leemorrow.dev`,
+      },
+    },
+    {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-164858596-1`,
