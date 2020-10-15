@@ -28,7 +28,7 @@ const AllProjects = ({ data, pageContext }) => {
           <h1>All Projects</h1>
           <SEO
             title={`All Projects - ${currentPage}`}
-            description="All data visualization projects."
+            description={`All data visualization projects - ${currentPage}`}
           />
           <ul>
             {edges.map(({ node: project }) => (
