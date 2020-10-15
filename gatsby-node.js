@@ -9,7 +9,7 @@
 // https://www.gatsbyjs.org/docs/adding-pagination/
 
 const path = require(`path`)
-const fs = require('fs')
+const fs = require("fs")
 const { createFilePath } = require(`gatsby-source-filesystem`)
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

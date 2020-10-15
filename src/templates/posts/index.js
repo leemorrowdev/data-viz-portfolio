@@ -25,7 +25,10 @@ const AllPosts = ({ data, pageContext }) => {
             <Link to="/">&larr; Home</Link>
           </div>
           <h1>All Posts</h1>
-          <SEO title={`All Posts - ${currentPage}`} description="All front end development blog posts." />
+          <SEO
+            title={`All Posts - ${currentPage}`}
+            description="All front end development blog posts."
+          />
           <ul>
             {edges.map(({ node: post }) => (
               <li key={post.id}>
@@ -56,7 +59,9 @@ const AllPosts = ({ data, pageContext }) => {
               return (
                 <span
                   key={pageNumber}
-                  className={`${styles.number} ${pageNumber === currentPage && styles.current}`}
+                  className={`${styles.number} ${
+                    pageNumber === currentPage && styles.current
+                  }`}
                 >
                   {pageNumber === 1 ? (
                     <Link to={`/posts/`}>1</Link>

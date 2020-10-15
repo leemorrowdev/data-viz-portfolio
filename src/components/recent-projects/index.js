@@ -25,6 +25,7 @@ const RecentProjects = () => {
                 <div className={styles.image}>
                   <Img
                     fluid={project.fields.featuredImage.childImageSharp.fluid}
+                    alt=""
                   />
                 </div>
                 <h4>{project.frontmatter.title}</h4>

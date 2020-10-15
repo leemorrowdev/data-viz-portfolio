@@ -26,7 +26,10 @@ const AllProjects = ({ data, pageContext }) => {
             <Link to="/">&larr; Home</Link>
           </div>
           <h1>All Projects</h1>
-          <SEO title={`All Projects - ${currentPage}`} description="All data visualization projects." />
+          <SEO
+            title={`All Projects - ${currentPage}`}
+            description="All data visualization projects."
+          />
           <ul>
             {edges.map(({ node: project }) => (
               <li key={project.id}>
@@ -40,6 +43,7 @@ const AllProjects = ({ data, pageContext }) => {
                         fluid={
                           project.fields.featuredImage.childImageSharp.fluid
                         }
+                        alt=""
                       />
                     </div>
                     <h4>{project.frontmatter.title}</h4>
@@ -66,7 +70,9 @@ const AllProjects = ({ data, pageContext }) => {
               return (
                 <span
                   key={pageNumber}
-                  className={`${styles.number} ${pageNumber === currentPage && styles.current}`}
+                  className={`${styles.number} ${
+                    pageNumber === currentPage && styles.current
+                  }`}
                 >
                   {pageNumber === 1 ? (
                     <Link to={`/projects/`}>1</Link>
