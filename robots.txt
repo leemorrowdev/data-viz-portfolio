@@ -1,0 +1,2 @@
+User-agent: *
+Sitemap: https://leemorrow.dev/sitemap.xml
