@@ -46,6 +46,14 @@ a {
   font-weight: 500;
   color: $color-primary-dark;
 
+  &.anchor {
+    fill: $color-primary-dark;
+    &:hover,
+    &:active {
+      border-bottom: none;
+    }
+  }
+
   &:hover,
   &:active {
     border-bottom: 1px solid $color-primary-dark;

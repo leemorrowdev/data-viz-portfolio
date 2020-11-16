@@ -8,7 +8,7 @@ import * as d3 from "d3"
 import { useChartDimensions } from "../../../../modules/hooks"
 import styles from "./chart.module.scss"
 
-export default function Chart({ settings }) {
+const Chart = ({ settings }) => {
   const [wrapperRef, dms] = useChartDimensions(settings)
   const svgRef = useRef();
 
@@ -25,3 +25,5 @@ export default function Chart({ settings }) {
     </div>
   )
 }
+
+export default Chart;

@@ -27,17 +27,18 @@ module.exports = {
   mapping: { "Mdx.fields.featuredImage": `File.absolutePath` },
   plugins: [
     {
-      resolve: `gatsby-plugin-canonical-urls`,
-      options: {
-        siteUrl: `https://www.leemorrow.dev`,
-      },
-    },
-    {
+      // Must be first in plugins array
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         trackingId: `UA-164858596-1`,
         head: true,
         anonymize: true,
+      },
+    },
+    {
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        siteUrl: `https://www.leemorrow.dev`,
       },
     },
     `gatsby-plugin-react-helmet`,
@@ -64,7 +65,7 @@ module.exports = {
         short_name: `Lee`,
         start_url: `/`,
         display: `minimal-ui`,
-        icon: `src/images/favicon.png`, // This path is relative to the root of the site.
+        icon: `src/images/favicon.png`, // This path is relative to the root of the site
       },
     },
     `gatsby-plugin-sitemap`,
@@ -77,17 +78,26 @@ module.exports = {
         },
         gatsbyRemarkPlugins: [
           {
+            resolve: `gatsby-remark-autolink-headers`,
+            options: {
+              maintainCase: false,
+              removeAccents: true,
+            },
+          }, // Must be before prism js
+          {
             resolve: `gatsby-remark-images`,
             options: {
               maxWidth: 1380,
               linkImagesToOriginal: false,
             },
           },
-          { resolve: `gatsby-remark-copy-linked-files` },
-          { resolve: `gatsby-remark-smartypants` },
+          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-smartypants`,
         ],
       },
     },
+    // Imported again as a bug workaround: https://github.com/gatsbyjs/gatsby/issues/16422
+    `gatsby-remark-autolink-headers`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
