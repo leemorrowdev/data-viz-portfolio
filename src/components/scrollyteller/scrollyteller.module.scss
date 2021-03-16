@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+
+  .column {
+    flex: 1;
+  }
+
+  .static {
+    margin-right: 1.6rem;
+  }
+
+  .scrolly {
+    position: sticky;
+    top: 25%;
+    margin-bottom: 1.6rem;
+  }
+}

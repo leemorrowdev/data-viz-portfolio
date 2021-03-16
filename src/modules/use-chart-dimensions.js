@@ -1,12 +1,11 @@
 /**
- * Custom React Hooks
+ * Return updated chart dimensions based on window size
  */
 
 import { useRef, useState, useEffect } from "react"
 
 // https://wattenberger.com/blog/react-and-d3#sizing-responsivity
 // https://overreacted.io/a-complete-guide-to-useeffect/
-// https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
 export const useChartDimensions = passedSettings => {
   const ref = useRef()
   const dimensions = combineChartDimensions(passedSettings)
