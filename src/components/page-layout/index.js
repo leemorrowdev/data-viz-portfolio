@@ -1,17 +1,17 @@
 /**
- * Main layout component
+ * Page layout component
  */
 
 import React from "react"
 import { useStaticQuery, graphql } from "gatsby"
 
-import Header from "../header"
-import Footer from "../footer"
+import Header from "./header"
+import Footer from "./footer"
 
-import "../../../sass/global.scss"
-import styles from "./main-layout.module.scss"
+import "../../sass/global.scss"
+import styles from "./page-layout.module.scss"
 
-const MainLayout = ({ children }) => {
+const PageLayout = ({ children }) => {
   const {
     site: {
       siteMetadata: { title, author, social },
@@ -35,11 +35,11 @@ const MainLayout = ({ children }) => {
     <>
       <div className={styles.container}>
         <Header siteTitle={title} siteSocial={social} />
-        <main>{children}</main>
+          <main>{children}</main>
         <Footer siteAuthor={author} />
       </div>
     </>
   )
 }
 
-export default MainLayout
+export default PageLayout

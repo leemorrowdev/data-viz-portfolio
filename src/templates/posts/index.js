@@ -6,11 +6,11 @@
 import React from "react"
 import { Link, graphql } from "gatsby"
 
-import MainLayout from "../../components/layout/main"
+import PageLayout from "../../components/page-layout"
 import SEO from "../../components/seo"
 import styles from "./posts.module.scss"
 
-const AllPosts = ({ data, pageContext }) => {
+const Posts = ({ data, pageContext }) => {
   const {
     allMdx: { edges },
   } = data
@@ -18,13 +18,13 @@ const AllPosts = ({ data, pageContext }) => {
   const { currentPage, numPages } = pageContext
 
   return (
-    <MainLayout>
+    <PageLayout>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.nav}>
             <Link to="/">&larr; Home</Link>
           </div>
-          <h1>All Posts</h1>
+          <h1>Posts</h1>
           <SEO
             title={`All Posts - ${currentPage}`}
             description={`All front end development blog posts - ${currentPage}`}
@@ -81,7 +81,7 @@ const AllPosts = ({ data, pageContext }) => {
           </span>
         </div>
       </div>
-    </MainLayout>
+    </PageLayout>
   )
 }
 
@@ -113,4 +113,4 @@ export const postsQuery = graphql`
   }
 `
 
-export default AllPosts
+export default Posts

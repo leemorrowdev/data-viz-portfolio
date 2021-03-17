@@ -1,5 +1,5 @@
 /**
- * Main layout component with custom SEO
+ * Mdx layout component with custom SEO
  */
 
 import React from "react"
@@ -7,12 +7,12 @@ import { Link, graphql } from "gatsby"
 import { MDXProvider } from "@mdx-js/react"
 import { MDXRenderer } from "gatsby-plugin-mdx"
 
-import MainLayout from "../../components/layout/main"
-import MDXComponents from "./components"
+import PageLayout from "../../components/page-layout"
+import components from "./components"
 import SEO from "../../components/seo"
-import styles from "./mdx-layout.module.scss"
+import styles from "./mdx.module.scss"
 
-const MdxLayout = ({
+const Mdx = ({
   location,
   data: {
     mdx: {
@@ -29,7 +29,7 @@ const MdxLayout = ({
   const { currentPage } = state || {}
 
   return (
-    <MainLayout>
+    <PageLayout>
       <div className={styles.container}>
         <div className={styles.nav}>
           {postsMatch && (
@@ -54,11 +54,11 @@ const MdxLayout = ({
         <h1>{title}</h1>
         <div className={styles.date}>{date}</div>
         <SEO title={title} description={description} />
-        <MDXProvider components={MDXComponents}>
+        <MDXProvider components={components}>
           <MDXRenderer>{body}</MDXRenderer>
         </MDXProvider>
       </div>
-    </MainLayout>
+    </PageLayout>
   )
 }
 
@@ -77,4 +77,4 @@ export const ContentQuery = graphql`
   }
 `
 
-export default MdxLayout
+export default Mdx

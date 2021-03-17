@@ -1,5 +1,5 @@
 /**
- * Main header component
+ * Header component
  */
 
 import { Link } from "gatsby"

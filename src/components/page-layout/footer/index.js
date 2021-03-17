@@ -1,5 +1,5 @@
 /**
- * Main footer component
+ * Footer component
  */
 
 import { Link } from "gatsby"

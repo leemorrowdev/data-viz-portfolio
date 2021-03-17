@@ -7,11 +7,11 @@ import React from "react"
 import { Link, graphql } from "gatsby"
 import Img from "gatsby-image"
 
-import MainLayout from "../../components/layout/main"
+import PageLayout from "../../components/page-layout"
 import SEO from "../../components/seo"
 import styles from "./projects.module.scss"
 
-const AllProjects = ({ data, pageContext }) => {
+const Projects = ({ data, pageContext }) => {
   const {
     allMdx: { edges },
   } = data
@@ -19,13 +19,13 @@ const AllProjects = ({ data, pageContext }) => {
   const { currentPage, numPages } = pageContext
 
   return (
-    <MainLayout>
+    <PageLayout>
       <div className={styles.container}>
         <div className={styles.content}>
           <div className={styles.nav}>
             <Link to="/">&larr; Home</Link>
           </div>
-          <h1>All Projects</h1>
+          <h1>Projects</h1>
           <SEO
             title={`All Projects - ${currentPage}`}
             description={`All data visualization projects - ${currentPage}`}
@@ -92,7 +92,7 @@ const AllProjects = ({ data, pageContext }) => {
           </span>
         </div>
       </div>
-    </MainLayout>
+    </PageLayout>
   )
 }
 
@@ -127,4 +127,4 @@ export const projectsQuery = graphql`
   }
 `
 
-export default AllProjects
+export default Projects

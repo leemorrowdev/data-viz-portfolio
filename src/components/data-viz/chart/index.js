@@ -5,8 +5,8 @@
 import React, { useEffect, useRef } from "react"
 import * as d3 from "d3"
 
-import { useChartDimensions } from "../../../../modules/use-chart-dimensions"
-import { useScrollama } from "../../../../modules/use-scrollama"
+import { useChartDimensions } from "../../../utils/use-chart-dimensions"
+import { useScrollama } from "../../../utils/use-scrollama"
 import styles from "./chart.module.scss"
 
 const Chart = ({ containerClassName, settings }) => {
@@ -16,6 +16,7 @@ const Chart = ({ containerClassName, settings }) => {
 
   useEffect(() => {
     const svg = d3.select(svgRef.current)
+    console.log('project-one')
   }, [dms, index, direction])
 
   return (
