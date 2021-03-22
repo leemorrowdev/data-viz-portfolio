@@ -35,7 +35,7 @@ const PageLayout = ({ children }) => {
     <>
       <div className={styles.container}>
         <Header siteTitle={title} siteSocial={social} />
-          <main>{children}</main>
+        <main>{children}</main>
         <Footer siteAuthor={author} />
       </div>
     </>

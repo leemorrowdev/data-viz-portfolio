@@ -2,15 +2,17 @@
  * Return updated chart dimensions based on window size
  */
 
-import { useState, useEffect } from "react"
+import { useState, useLayoutEffect, useContext } from "react"
 import scrollama from "scrollama"
-import * as d3 from "d3"
 
-export const useScrollama = (containerClassName, passedSettings) => {
+import { ScrollamaContext } from "../components/project-layouts/scrollama"
+
+export const useScrollama = passedSettings => {
   const [index, setIndex] = useState(0)
   const [direction, setDirection] = useState("")
+  const scrollamaElement = useContext(ScrollamaContext)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const scroller = scrollama()
 
     scroller
@@ -27,11 +29,12 @@ export const useScrollama = (containerClassName, passedSettings) => {
         setDirection(response.direction)
       })
 
-    const container = d3.select(`.${containerClassName}`).node()
-    const resizeObserver = new ResizeObserver(() => scroller.resize())
-    resizeObserver.observe(container)
-    return () => resizeObserver.unobserve(container)
-  }, [containerClassName, passedSettings])
+    if (scrollamaElement !== null) {
+      const resizeObserver = new ResizeObserver(() => scroller.resize())
+      resizeObserver.observe(scrollamaElement)
+      return () => resizeObserver.unobserve(scrollamaElement)
+    }
+  }, [passedSettings, scrollamaElement])
 
   return [index, direction]
 }

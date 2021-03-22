@@ -9,14 +9,14 @@ import { useChartDimensions } from "../../../utils/use-chart-dimensions"
 import { useScrollama } from "../../../utils/use-scrollama"
 import styles from "./chart.module.scss"
 
-const Chart = ({ containerClassName, settings }) => {
+const Chart = ({ settings }) => {
   const svgRef = useRef()
   const [wrapperRef, dms] = useChartDimensions(settings)
-  const [index, direction] = useScrollama(containerClassName)
+  const [index, direction] = useScrollama()
 
   useEffect(() => {
     const svg = d3.select(svgRef.current)
-    console.log('project-one')
+    console.log(direction)
   }, [dms, index, direction])
 
   return (

@@ -15,8 +15,9 @@ const IndexPage = () => (
     </h1>
     <p>
       I'm a front end developer interested in building interactive data
-      visualizations in React and D3. I love learning about economics, finance, statistics, health, and exercise, 
-      and want to help facilitate better visual communication and understanding.
+      visualizations in React and D3. I love learning about economics, finance,
+      statistics, health, and exercise, and want to help facilitate better
+      visual communication and understanding.
     </p>
     <p>
       Check out my blog posts and projects below for content on front end
