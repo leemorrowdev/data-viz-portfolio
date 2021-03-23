@@ -8,7 +8,7 @@ import { useRef, useState, useEffect } from "react"
 // https://overreacted.io/a-complete-guide-to-useeffect/
 export const useChartDimensions = passedSettings => {
   const ref = useRef()
-  const dimensions = combineChartDimensions(passedSettings)
+  const dimensions = combineChartDimensions(passedSettings ?? {})
 
   const [width, setWidth] = useState(0)
   const [height, setHeight] = useState(0)

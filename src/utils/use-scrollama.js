@@ -12,13 +12,17 @@ export const useScrollama = passedSettings => {
   const [direction, setDirection] = useState("")
   const scrollamaElement = useContext(ScrollamaContext)
 
+  if (scrollamaElement === undefined) {
+    throw new Error("useScrollama must be called within a ScrollamaProvider")
+  }
+
   useLayoutEffect(() => {
     const scroller = scrollama()
 
     scroller
       .setup({
-        step: `.step`,
         ...passedSettings,
+        step: passedSettings?.step ?? ".step",
       })
       .onStepEnter(response => {
         setIndex(response.index)

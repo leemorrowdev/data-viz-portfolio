@@ -9,9 +9,9 @@ import { useChartDimensions } from "../../../utils/use-chart-dimensions"
 import { useScrollama } from "../../../utils/use-scrollama"
 import styles from "./chart.module.scss"
 
-const Chart = ({ settings }) => {
+const Chart = () => {
   const svgRef = useRef()
-  const [wrapperRef, dms] = useChartDimensions(settings)
+  const [wrapperRef, dms] = useChartDimensions()
   const [index, direction] = useScrollama()
 
   useEffect(() => {

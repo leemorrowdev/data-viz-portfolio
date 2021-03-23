@@ -8,7 +8,7 @@ import styles from "./scrollama.module.scss"
 
 export const ScrollamaContext = createContext()
 
-const Scrollama = ({ children }) => {
+export const ScrollamaProvider = ({ children }) => {
   const [scrollamaElement, setScrollamaElement] = useState(null)
 
   // https://github.com/facebook/react/issues/14387
@@ -44,12 +44,6 @@ export const ScrollyColumn = ({ children }) => {
   )
 }
 
-export const Step = ({ children, className }) => {
-  return (
-    <div className={"step"}>
-      <div className={className}>{children}</div>
-    </div>
-  )
+export const Step = ({ children, step }) => {
+  return <div className={step ?? "step"}>{children}</div>
 }
-
-export default Scrollama
