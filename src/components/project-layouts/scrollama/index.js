@@ -1,28 +1,47 @@
 /**
- * Scrollytelling component
+ * ScrollamaProvider
+ * Provide Scrollama index and direction to children
  */
 
-import React, { useState, useCallback, createContext } from "react"
+import React, { useRef, useEffect, useState, createContext } from "react"
+import scrollama from "scrollama"
 
 import styles from "./scrollama.module.scss"
 
 export const ScrollamaContext = createContext()
 
-export const ScrollamaProvider = ({ children }) => {
-  const [scrollamaElement, setScrollamaElement] = useState(null)
+export const ScrollamaProvider = ({ children, passedSettings }) => {
+  const ref = useRef()
+  const [index, setIndex] = useState(0)
+  const [direction, setDirection] = useState("")
 
-  // https://github.com/facebook/react/issues/14387
-  // https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
-  const scrollamaRef = useCallback(node => {
-    if (node !== null) {
-      setScrollamaElement(node)
-    }
-  }, [])
+  useEffect(() => {
+    const element = ref.current
+    const scroller = scrollama()
+
+    scroller
+      .setup({
+        ...passedSettings,
+        step: passedSettings?.step ?? ".step",
+      })
+      .onStepEnter(response => {
+        setIndex(response.index)
+        setDirection(response.direction)
+      })
+      .onStepExit(response => {
+        setIndex(response.index)
+        setDirection(response.direction)
+      })
+
+    const resizeObserver = new ResizeObserver(() => scroller.resize())
+    resizeObserver.observe(element)
+    return () => resizeObserver.unobserve(element)
+  }, [passedSettings])
 
   return (
-    <ScrollamaContext.Provider value={scrollamaElement}>
-      <div ref={scrollamaRef}>
-        <div className={styles.container}>{children}</div>
+    <ScrollamaContext.Provider value={{ index, direction }}>
+      <div ref={ref} className={styles.container}>
+        {children}
       </div>
     </ScrollamaContext.Provider>
   )

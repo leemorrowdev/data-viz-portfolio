@@ -1,4 +1,5 @@
 /**
+ * useChartDimensions
  * Return updated chart dimensions based on window size
  */
 
