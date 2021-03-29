@@ -8,7 +8,6 @@ import { useStaticQuery, graphql } from "gatsby"
 import Header from "./header"
 import Footer from "./footer"
 
-import "../../sass/global.scss"
 import styles from "./page-layout.module.scss"
 
 const PageLayout = ({ children }) => {
