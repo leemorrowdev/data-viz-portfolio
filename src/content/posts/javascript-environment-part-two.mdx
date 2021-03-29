@@ -33,7 +33,7 @@ The heap contains references to all function declarations and variables. It is m
 They are each associated with a syntactic structure, for example a function declaration or a block statement, and are used for *identifier resolution* in that structure.
 - Identifier resultion: the process of mapping (registering) identifiers (variable or function names) to variables (memory locations).
 
-Its worth noting that there are three additional lexical environments subclasses that provide support for environments that require unique attributes or additional functionality:
+It's worth noting that there are three additional lexical environments subclasses that provide support for environments that require unique attributes or additional functionality:
 - **global environments:** Sets the outer lexical environment's reference to `null`
 - **function environments:** Provides `this` binding and provides support for `super` invocations
 - **module environments:** Provides bindings for the top level declarations and imports in modules

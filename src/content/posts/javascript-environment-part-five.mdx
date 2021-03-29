@@ -19,7 +19,7 @@ Check out the other parts of this series:
 In this part I'll be discussing a special topic: closures. I'll explain what they really are in the context of everything I've covered so far in this series,
 and then I'll show their two most common use cases.
 
-First, its review time again. We know that every time a function is defined, it creates a new lexical environment. 
+First, it's review time again. We know that every time a function is defined, it creates a new lexical environment. 
 We also know that every lexical environment keeps a reference to the environment it was created in. 
 
 Alright now here's the new part:
@@ -35,7 +35,7 @@ The variables in scope when the function was defined are *enclosed* around that 
 Callback functions are functions that are called after some asynchronous operation has completed, 
 at which point the execution context and lexical environment they were defined in will no longer be on the call stack. 
 
-Because the callback function creates a closure when it is defined, its still possible to access variables defined outside its lexical environment. 
+Because the callback function creates a closure when it is defined, it's still possible to access variables defined outside its lexical environment. 
 
 ```
 var tick = 0;
