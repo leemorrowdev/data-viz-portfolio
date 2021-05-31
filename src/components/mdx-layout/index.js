@@ -1,18 +1,18 @@
 /**
- * Mdx layout component with custom SEO
+ * Mdx layout
  */
 
-import React from "react"
-import { Link, graphql } from "gatsby"
-import { MDXProvider } from "@mdx-js/react"
-import { MDXRenderer } from "gatsby-plugin-mdx"
+import React from "react";
+import { Link, graphql } from "gatsby";
+import { MDXProvider } from "@mdx-js/react";
+import { MDXRenderer } from "gatsby-plugin-mdx";
 
-import PageLayout from "../../components/page-layout"
-import components from "./components"
-import SEO from "../../components/seo"
-import styles from "./mdx.module.scss"
+import PageLayout from "../page-layout";
+import components from "./components";
+import Seo from "../seo";
+import { container, nav, dateText } from "./mdx-layout.module.scss";
 
-const Mdx = ({
+const MdxLayout = ({
   location,
   data: {
     mdx: {
@@ -22,16 +22,16 @@ const Mdx = ({
     },
   },
 }) => {
-  const postsMatch = /src\/content\/posts/.test(fileAbsolutePath)
-  const projectsMatch = /src\/content\/projects/.test(fileAbsolutePath)
+  const postsMatch = /src\/content\/posts/.test(fileAbsolutePath);
+  const projectsMatch = /src\/content\/projects/.test(fileAbsolutePath);
 
-  const { state = {} } = location
-  const { currentPage } = state || {}
+  const { state = {} } = location;
+  const { currentPage } = state || {};
 
   return (
     <PageLayout>
-      <div className={styles.container}>
-        <div className={styles.nav}>
+      <div className={container}>
+        <div className={nav}>
           {postsMatch && (
             <Link
               to={`/posts/${
@@ -52,15 +52,15 @@ const Mdx = ({
           )}
         </div>
         <h1>{title}</h1>
-        <div className={styles.date}>{date}</div>
-        <SEO title={title} description={description} />
+        <div className={dateText}>{date}</div>
+        <Seo title={title} description={description} />
         <MDXProvider components={components}>
           <MDXRenderer>{body}</MDXRenderer>
         </MDXProvider>
       </div>
     </PageLayout>
-  )
-}
+  );
+};
 
 export const ContentQuery = graphql`
   query ContentQuery($id: String) {
@@ -75,6 +75,6 @@ export const ContentQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default Mdx
+export default MdxLayout;

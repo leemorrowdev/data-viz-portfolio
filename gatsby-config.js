@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Lee Morrow`,
+    title: "Lee Morrow",
     author: `Lee Morrow`,
     description: `Hi, my name is Lee. I make interesting data visualizations and write about front-end development.`,
     siteUrl: `https://leemorrow.dev`,
@@ -27,12 +27,24 @@ module.exports = {
   mapping: { "Mdx.fields.featuredImage": `File.absolutePath` },
   plugins: [
     {
-      // Must be first in plugins array
-      resolve: `gatsby-plugin-google-analytics`,
+      resolve: "gatsby-plugin-google-analytics",
       options: {
-        trackingId: `UA-164858596-1`,
+        trackingId: "UA-164858596-1",
         head: true,
         anonymize: true,
+        respectDNT: true,
+      },
+    },
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-sitemap",
+    {
+      resolve: "gatsby-plugin-manifest",
+      options: {
+        name: `Lee Morrow`,
+        short_name: `Lee`,
+        start_url: `/`,
+        display: `minimal-ui`,
+        icon: "src/images/favicon.png",
       },
     },
     {
@@ -41,56 +53,52 @@ module.exports = {
         siteUrl: `https://www.leemorrow.dev`,
       },
     },
-    `gatsby-plugin-react-helmet`,
+    "gatsby-plugin-sass",
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-transformer-sharp",
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: `gatsby-transformer-remark`,
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        plugins: [
+          `gatsby-remark-autolink-headers`,
+          `gatsby-remark-smartypants`,
+          `gatsby-remark-images`,
+          `gatsby-remark-copy-linked-files`,
+        ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
-    {
-      resolve: `gatsby-plugin-manifest`,
-      options: {
-        name: `Lee Morrow`,
-        short_name: `Lee`,
-        start_url: `/`,
-        display: `minimal-ui`,
-        icon: `src/images/favicon.png`, // This path is relative to the root of the site
-      },
-    },
-    `gatsby-plugin-sitemap`,
     {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`],
         defaultLayouts: {
-          default: require.resolve("./src/templates/mdx/index.js"),
+          default: require.resolve("./src/components/mdx-layout/index.js"),
         },
         gatsbyRemarkPlugins: [
-          {
-            resolve: `gatsby-remark-autolink-headers`,
-            options: {
-              maintainCase: false,
-              removeAccents: true,
-            },
-          }, // Must be before prism js
-          {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 1380,
-              linkImagesToOriginal: false,
-            },
-          },
-          `gatsby-remark-copy-linked-files`,
+          `gatsby-remark-autolink-headers`,
           `gatsby-remark-smartypants`,
+          `gatsby-remark-images`,
+          `gatsby-remark-copy-linked-files`,
         ],
       },
     },
-    // Imported again as a bug workaround: https://github.com/gatsbyjs/gatsby/issues/16422
-    `gatsby-remark-autolink-headers`,
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "images",
+        path: "./src/images/",
+      },
+      __key: "images",
+    },
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "pages",
+        path: "./src/pages/",
+      },
+      __key: "pages",
+    },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -105,6 +113,5 @@ module.exports = {
         path: `${__dirname}/src/content/projects`,
       },
     },
-    `gatsby-plugin-sass`,
   ],
-}
+};

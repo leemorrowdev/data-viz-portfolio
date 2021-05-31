@@ -1,55 +1,56 @@
 /**
  * useChartDimensions
+ * 
  * Return updated chart dimensions based on window size
  */
 
-import { useRef, useState, useEffect } from "react"
+import { useRef, useState, useEffect } from "react";
 
 // https://wattenberger.com/blog/react-and-d3#sizing-responsivity
 // https://overreacted.io/a-complete-guide-to-useeffect/
-export const useChartDimensions = passedSettings => {
-  const ref = useRef()
-  const dimensions = combineChartDimensions(passedSettings ?? {})
+export const useChartDimensions = (passedSettings) => {
+  const ref = useRef();
+  const dimensions = combineChartDimensions(passedSettings ?? {});
 
-  const [width, setWidth] = useState(0)
-  const [height, setHeight] = useState(0)
+  const [width, setWidth] = useState(0);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
-    if (dimensions.width && dimensions.height) return [ref, dimensions]
+    if (dimensions.width && dimensions.height) return [ref, dimensions];
 
-    const element = ref.current
-    const resizeObserver = new ResizeObserver(entries => {
-      if (!Array.isArray(entries)) return
-      if (!entries.length) return
+    const element = ref.current;
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (!Array.isArray(entries)) return;
+      if (!entries.length) return;
 
-      const entry = entries[0]
+      const entry = entries[0];
 
-      if (width !== entry.contentRect.width) setWidth(entry.contentRect.width)
+      if (width !== entry.contentRect.width) setWidth(entry.contentRect.width);
       if (height !== entry.contentRect.height)
-        setHeight(entry.contentRect.height)
-    })
-    resizeObserver.observe(element)
+        setHeight(entry.contentRect.height);
+    });
+    resizeObserver.observe(element);
 
-    return () => resizeObserver.unobserve(element)
-  }, [height, width, dimensions])
+    return () => resizeObserver.unobserve(element);
+  }, [height, width, dimensions]);
 
   const newSettings = combineChartDimensions({
     ...dimensions,
     width: dimensions.width || width,
     height: dimensions.height || height,
-  })
+  });
 
-  return [ref, newSettings]
-}
+  return [ref, newSettings];
+};
 
-const combineChartDimensions = dimensions => {
+const combineChartDimensions = (dimensions) => {
   const parsedDimensions = {
     ...dimensions,
     marginTop: dimensions.marginTop || 10,
     marginRight: dimensions.marginRight || 10,
     marginBottom: dimensions.marginBottom || 40,
     marginLeft: dimensions.marginLeft || 75,
-  }
+  };
 
   return {
     ...parsedDimensions,
@@ -65,5 +66,5 @@ const combineChartDimensions = dimensions => {
         parsedDimensions.marginRight,
       0
     ),
-  }
-}
+  };
+};

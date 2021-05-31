@@ -1,30 +1,21 @@
 /**
- * Footer component
+ * Footer
  */
 
-import { Link } from "gatsby"
-import PropTypes from "prop-types"
-import React from "react"
+import { Link } from "gatsby";
+import React from "react";
 
-import styles from "./footer.module.scss"
+import { container, author } from "./footer.module.scss";
 
-const Footer = ({ siteAuthor }) => (
-  <footer className={styles.container}>
+const Footer = ({ siteAuthor = "" }) => (
+  <footer className={container}>
     <div>
       © {new Date().getFullYear()}{" "}
-      <span className={styles.author}>
+      <span className={author}>
         <Link to="/">{siteAuthor}</Link>
       </span>
     </div>
   </footer>
-)
+);
 
-Footer.propTypes = {
-  siteAuthor: PropTypes.string,
-}
-
-Footer.defaultProps = {
-  siteAuthor: ``,
-}
-
-export default Footer
+export default Footer;

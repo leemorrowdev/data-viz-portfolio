@@ -5,11 +5,15 @@
     flex: 1;
   }
 
-  .static {
-    margin-right: 1.6rem;
+  .left {
+    margin-right: .8rem;
   }
 
-  .scrolly {
+  .right {
+    margin-left: .8rem;
+  }
+
+  .sticky {
     position: sticky;
     top: 25%;
     margin-bottom: 1.6rem;

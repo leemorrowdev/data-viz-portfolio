@@ -1,14 +1,16 @@
 /**
- * Page layout component
+ * Page Layout
  */
 
-import React from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import React from "react";
+import { useStaticQuery, graphql } from "gatsby";
 
-import Header from "./header"
-import Footer from "./footer"
+import "../../sass/global.scss";
 
-import styles from "./page-layout.module.scss"
+import Header from "./header";
+import Footer from "./footer";
+
+import { container } from "./page-layout.module.scss";
 
 const PageLayout = ({ children }) => {
   const {
@@ -28,17 +30,17 @@ const PageLayout = ({ children }) => {
         }
       }
     }
-  `)
+  `);
 
   return (
     <>
-      <div className={styles.container}>
+      <div className={container}>
         <Header siteTitle={title} siteSocial={social} />
         <main>{children}</main>
         <Footer siteAuthor={author} />
       </div>
     </>
-  )
-}
+  );
+};
 
-export default PageLayout
+export default PageLayout;

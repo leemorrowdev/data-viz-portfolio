@@ -1,31 +1,41 @@
 /**
- * Component to list all posts
+ * Posts
+ * 
+ * Display a page of posts
  * Based on https://www.gatsbyjs.org/docs/adding-pagination/
  */
 
-import React from "react"
-import { Link, graphql } from "gatsby"
+import React from "react";
+import { Link, graphql } from "gatsby";
 
-import PageLayout from "../../components/page-layout"
-import SEO from "../../components/seo"
-import styles from "./posts.module.scss"
+import PageLayout from "../../components/page-layout";
+import Seo from "../../components/seo";
+import {
+  container,
+  content,
+  nav,
+  pagination,
+  arrow,
+  number,
+  current,
+} from "./posts.module.scss";
 
 const Posts = ({ data, pageContext }) => {
   const {
     allMdx: { edges },
-  } = data
+  } = data;
 
-  const { currentPage, numPages } = pageContext
+  const { currentPage, numPages } = pageContext;
 
   return (
     <PageLayout>
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.nav}>
+      <div className={container}>
+        <div className={content}>
+          <div className={nav}>
             <Link to="/">&larr; Home</Link>
           </div>
           <h1>Posts</h1>
-          <SEO
+          <Seo
             title={`All Posts - ${currentPage}`}
             description={`All front end development blog posts - ${currentPage}`}
           />
@@ -43,8 +53,8 @@ const Posts = ({ data, pageContext }) => {
             ))}
           </ul>
         </div>
-        <div className={styles.pagination}>
-          <span className={styles.arrow}>
+        <div className={pagination}>
+          <span className={arrow}>
             {!(currentPage === 1) && (
               <Link
                 to={`/posts/${currentPage - 1 === 1 ? "" : currentPage - 1}`}
@@ -55,12 +65,12 @@ const Posts = ({ data, pageContext }) => {
           </span>
           <span>
             {Array.from({ length: numPages }, (_, i) => {
-              const pageNumber = i + 1
+              const pageNumber = i + 1;
               return (
                 <span
                   key={pageNumber}
-                  className={`${styles.number} ${
-                    pageNumber === currentPage && styles.current
+                  className={`${number} ${
+                    pageNumber === currentPage && current
                   }`}
                 >
                   {pageNumber === 1 ? (
@@ -69,10 +79,10 @@ const Posts = ({ data, pageContext }) => {
                     <Link to={`/posts/${pageNumber}`}>{pageNumber}</Link>
                   )}
                 </span>
-              )
+              );
             })}
           </span>
-          <span className={styles.arrow}>
+          <span className={arrow}>
             {currentPage !== numPages && (
               <Link to={`/posts/${currentPage + 1}`} rel="next">
                 &rarr;
@@ -82,8 +92,8 @@ const Posts = ({ data, pageContext }) => {
         </div>
       </div>
     </PageLayout>
-  )
-}
+  );
+};
 
 export const postsQuery = graphql`
   query postsQuery($skip: Int!, $limit: Int!) {
@@ -111,6 +121,6 @@ export const postsQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default Posts
+export default Posts;

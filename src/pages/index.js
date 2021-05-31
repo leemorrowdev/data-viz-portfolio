@@ -1,17 +1,21 @@
-import React from "react"
-import { withPrefix } from "gatsby"
+/**
+ * Home
+ */
 
-import PageLayout from "../components/page-layout"
-import SEO from "../components/seo"
-import RecentPosts from "../components/recent-posts"
-import RecentProjects from "../components/recent-projects"
-import styles from "./index.module.scss"
+import React from "react";
+import { withPrefix } from "gatsby";
+
+import PageLayout from "../components/page-layout";
+import Seo from "../components/seo";
+import RecentPosts from "../components/recent-posts";
+import RecentProjects from "../components/recent-projects";
+import { highlight } from "./index.module.scss";
 
 const IndexPage = () => (
   <PageLayout>
-    <SEO title="Home" />
+    <Seo title="Home" />
     <h1>
-      <span className={styles.highlight}>Hi,</span> my name is Lee
+      <span className={highlight}>Hi,</span> my name is Lee
     </h1>
     <p>
       I'm a front end developer interested in building interactive data
@@ -30,6 +34,6 @@ const IndexPage = () => (
     <RecentPosts />
     <RecentProjects />
   </PageLayout>
-)
+);
 
-export default IndexPage
+export default IndexPage;

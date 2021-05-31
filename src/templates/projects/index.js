@@ -1,61 +1,68 @@
 /**
- * Component to list all projects
+ * Projects
+ * 
+ * Display a page of projects
  * Based on https://www.gatsbyjs.org/docs/adding-pagination/
  */
 
-import React from "react"
-import { Link, graphql } from "gatsby"
-import Img from "gatsby-image"
+import React from "react";
+import { Link, graphql } from "gatsby";
+import { GatsbyImage, getImage } from "gatsby-plugin-image";
 
-import PageLayout from "../../components/page-layout"
-import SEO from "../../components/seo"
-import styles from "./projects.module.scss"
+import PageLayout from "../../components/page-layout";
+import Seo from "../../components/seo";
+import {
+  container,
+  content,
+  nav,
+  pagination,
+  arrow,
+  number,
+  current,
+} from "./projects.module.scss";
 
 const Projects = ({ data, pageContext }) => {
   const {
     allMdx: { edges },
-  } = data
+  } = data;
 
-  const { currentPage, numPages } = pageContext
+  const { currentPage, numPages } = pageContext;
 
   return (
     <PageLayout>
-      <div className={styles.container}>
-        <div className={styles.content}>
-          <div className={styles.nav}>
+      <div className={container}>
+        <div className={content}>
+          <div className={nav}>
             <Link to="/">&larr; Home</Link>
           </div>
           <h1>Projects</h1>
-          <SEO
+          <Seo
             title={`All Projects - ${currentPage}`}
             description={`All data visualization projects - ${currentPage}`}
           />
           <ul>
-            {edges.map(({ node: project }) => (
-              <li key={project.id}>
-                <Link
-                  to={`/projects${project.fields.slug}`}
-                  state={{ currentPage }}
-                >
-                  <div>
-                    <div className={styles.image}>
-                      <Img
-                        fluid={
-                          project.fields.featuredImage.childImageSharp.fluid
-                        }
-                        alt=""
-                      />
+            {edges.map(({ node: project }) => {
+              const featuredImage = getImage(project.fields.featuredImage);
+
+              return (
+                <li key={project.id}>
+                  <Link
+                    to={`/projects${project.fields.slug}`}
+                    state={{ currentPage }}
+                  >
+                    <div>
+                      <GatsbyImage image={featuredImage} alt="" />
+                      <h4>{project.frontmatter.title}</h4>
+                      <span>{project.frontmatter.date}</span>
                     </div>
-                    <h4>{project.frontmatter.title}</h4>
-                    <span>{project.frontmatter.date}</span>
-                  </div>
-                </Link>
-              </li>
-            ))}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </div>
-        <div className={styles.pagination}>
-          <span className={styles.arrow}>
+        <div className={pagination}>
+          <span className={arrow}>
             {!(currentPage === 1) && (
               <Link
                 to={`/projects/${currentPage - 1 === 1 ? "" : currentPage - 1}`}
@@ -66,12 +73,12 @@ const Projects = ({ data, pageContext }) => {
           </span>
           <span>
             {Array.from({ length: numPages }, (_, i) => {
-              const pageNumber = i + 1
+              const pageNumber = i + 1;
               return (
                 <span
                   key={pageNumber}
-                  className={`${styles.number} ${
-                    pageNumber === currentPage && styles.current
+                  className={`${number} ${
+                    pageNumber === currentPage && current
                   }`}
                 >
                   {pageNumber === 1 ? (
@@ -80,10 +87,10 @@ const Projects = ({ data, pageContext }) => {
                     <Link to={`/projects/${pageNumber}`}>{pageNumber}</Link>
                   )}
                 </span>
-              )
+              );
             })}
           </span>
-          <span className={styles.arrow}>
+          <span className={arrow}>
             {currentPage !== numPages && (
               <Link to={`/projects/${currentPage + 1}`} rel="next">
                 &rarr;
@@ -93,8 +100,8 @@ const Projects = ({ data, pageContext }) => {
         </div>
       </div>
     </PageLayout>
-  )
-}
+  );
+};
 
 export const projectsQuery = graphql`
   query projectsQuery($skip: Int!, $limit: Int!) {
@@ -110,9 +117,7 @@ export const projectsQuery = graphql`
           fields {
             featuredImage {
               childImageSharp {
-                fluid {
-                  ...GatsbyImageSharpFluid
-                }
+                gatsbyImageData(layout: CONSTRAINED)
               }
             }
             slug
@@ -125,6 +130,6 @@ export const projectsQuery = graphql`
       }
     }
   }
-`
+`;
 
-export default Projects
+export default Projects;
