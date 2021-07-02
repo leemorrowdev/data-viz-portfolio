@@ -18,14 +18,11 @@ const IndexPage = () => (
       <span className={highlight}>Hi,</span> my name is Lee
     </h1>
     <p>
-      I'm a front end developer interested in building interactive data
-      visualizations in React and D3. I love learning about economics, finance,
-      statistics, health, and exercise, and want to help facilitate better
-      visual communication and understanding.
+      I'm a front end developer with a passion for building interactive data
+      visualizations in React and D3. I love learning and creating fascinating projects about whatever interests me, mostly running. 
     </p>
     <p>
-      Check out my blog posts and projects below for content on front end
-      development and interesting data visualizations.
+      Check out my posts and projects below!
     </p>
     <p>
       Interested in working with me? Here's my{" "}
