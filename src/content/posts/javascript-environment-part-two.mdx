@@ -29,7 +29,7 @@ The heap contains references to all function declarations and variables. It is m
 
 ### Lexical Environments
 
-[Lexical environments](https://www.ecma-international.org/ecma-262/#sec-lexical-environments) are basically JavaScript's internal implementation of scopes. 
+[Lexical environments](https://262.ecma-international.org/11.0/#sec-lexical-environments) are basically JavaScript's internal implementation of scopes. 
 They are each associated with a syntactic structure, for example a function declaration or a block statement, and are used for *identifier resolution* in that structure.
 - Identifier resultion: the process of mapping (registering) identifiers (variable or function names) to variables (memory locations).
 
@@ -58,7 +58,7 @@ There are also three Environmental Record subtypes used in the subclasses I ment
 
 ### Execution Contexts
 
-[Execution contexts](https://www.ecma-international.org/ecma-262/#sec-execution-contexts) are used with the execution context stack to track the applications execution.
+[Execution contexts](https://262.ecma-international.org/11.0/#sec-execution-contexts) are used with the execution context stack to track the application's execution.
 The execution context stack is more commonly referred to as the call stack, 
 but I'm being technical here so I'm going to continue calling it the execution context stack for this series.
 
@@ -74,7 +74,7 @@ Execution contexts are also used in identifier resolution, because each executio
 - LexicalEnvironment: contains all identifier bindings for function declarations, `let`, and `const`
 - VariableEnvironment: contains all identifier bindings for `var`
 
-**Note:** This is why people sometimes say the `this` keyword represents the environments `context`.
+**Note:** This is why people sometimes say the `this` keyword represents the environment's `context`.
 
 ### The Execution Context Stack
 
@@ -83,7 +83,7 @@ just replace execution context stack with call stack in your mind.
 
 When a function is invoked, the current execution context must be stopped and a new execution context must be created. 
 Once this execution context has completed, it is discarded and the original execution context resumes where it left off. 
-The [execution context stack](https://www.ecma-international.org/ecma-262/#execution-context-stack) 
+The [execution context stack](https://262.ecma-international.org/11.0/#execution-context-stack) 
 tracks these execution contexts to ensure application execution pauses and resumes correctly when functions are invoked or return. 
 
 ### The Macrotask and Microtask Queues

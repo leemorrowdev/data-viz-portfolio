@@ -55,7 +55,7 @@ Every time a constructor is invoked using the `new` keyword, a new lexical envir
 Because of this, we can declare variables inside the constructor that are only accessible in the scope of the constructor. Private variables in JavaScript! 
 
 Functions defined as methods have access to the scope in which they were defined, 
-which creates a closure around those variables. We even have methods can mutate the private variables associated with a particular object!
+which creates a closure around those variables. Because of this, these methods can be used to mutate the private variables associated with a particular object.
 
 Again, these variables cannot be accessed directly because they are not connected to the context of newly initiated objects; they can only be accessed through the closure. 
 
